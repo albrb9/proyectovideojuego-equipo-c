@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="50bbf746-046a-4257-858e-ff3ecbdaf730" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="ProjectId" id="1aDQAsWXqREXCMQ7OV9xiqNqlsX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="proyectovideojuego-equipo-c" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="50bbf746-046a-4257-858e-ff3ecbdaf730" name="Default Changelist" comment="" />
+      <created>1586267543014</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586267543014</updated>
+      <workItem from="1586267544190" duration="74000" />
+      <workItem from="1586269067988" duration="2031000" />
+      <workItem from="1586275950649" duration="1237000" />
+      <workItem from="1586621571650" duration="42000" />
+      <workItem from="1586621756390" duration="229000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="446" y="139" key="#Notifications" timestamp="1586621597580">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state x="446" y="139" key="#Notifications/0.0.1707.960@0.0.1707.960" timestamp="1586621597580" />
+    <state x="309" y="135" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586275832455">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state x="309" y="135" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1707.960@0.0.1707.960" timestamp="1586275832455" />
+    <state x="463" y="75" key="CommitChangelistDialog2" timestamp="1586621580895">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state x="463" y="75" key="CommitChangelistDialog2/0.0.1707.960@0.0.1707.960" timestamp="1586621580895" />
+    <state x="634" y="235" key="FileChooserDialogImpl" timestamp="1586267617124">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state x="634" y="235" key="FileChooserDialogImpl/0.0.1707.960@0.0.1707.960" timestamp="1586267617124" />
+    <state width="1663" height="255" key="GridCell.Tab.0.bottom" timestamp="1586276795856">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state width="1663" height="255" key="GridCell.Tab.0.bottom/0.0.1707.960@0.0.1707.960" timestamp="1586276795856" />
+    <state width="1663" height="255" key="GridCell.Tab.0.center" timestamp="1586276795856">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state width="1663" height="255" key="GridCell.Tab.0.center/0.0.1707.960@0.0.1707.960" timestamp="1586276795856" />
+    <state width="1663" height="255" key="GridCell.Tab.0.left" timestamp="1586276795856">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state width="1663" height="255" key="GridCell.Tab.0.left/0.0.1707.960@0.0.1707.960" timestamp="1586276795856" />
+    <state width="1663" height="255" key="GridCell.Tab.0.right" timestamp="1586276795856">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state width="1663" height="255" key="GridCell.Tab.0.right/0.0.1707.960@0.0.1707.960" timestamp="1586276795856" />
+    <state x="550" y="304" key="com.intellij.ide.util.TipDialog" timestamp="1586621757361">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state x="550" y="304" key="com.intellij.ide.util.TipDialog/0.0.1707.960@0.0.1707.960" timestamp="1586621757361" />
+    <state x="663" y="397" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586621769498">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state x="663" y="397" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1707.960@0.0.1707.960" timestamp="1586621769498" />
+    <state x="549" y="212" width="609" height="536" key="find.popup" timestamp="1586276753929">
+      <screen x="0" y="0" width="1707" height="960" />
+    </state>
+    <state x="549" y="212" width="609" height="536" key="find.popup/0.0.1707.960@0.0.1707.960" timestamp="1586276753929" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/proyectovideojuego_equipo_c$Main.coverage" NAME="Main Coverage Results" MODIFIED="1586276781107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
