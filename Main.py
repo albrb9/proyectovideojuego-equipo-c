@@ -1,71 +1,78 @@
 import arcade
 
 # --- Constantes ---
-SPRITE_SCALING_BOX = 0.5
-SPRITE_SCALING_PLAYER = 0.5
+
+# SPRITE_SCALING_BOX = 0.5
+# SPRITE_SCALING_PLAYER = 0.5
 
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
 
 MOVEMENT_SPEED = 5
 
+LARGO_MURO = 50
+ANCHO_MURO = 10
+TAM_SUELO = 50  # Tamaño de cada "cuadro" de suelo
+
+
 class Room:
     """
     This class holds all the information about the
     different rooms.
     """
+
     def __init__(self):
         # You may want many lists. Lists for coins, monsters, etc.
         self.wall_list = None
+        # self.floor_list = None
 
         # This holds the background images. If you don't want changing
         # background images, you can delete this part.
-        self.background = None
+        # self.background = None
 
 
 def setup_room_1():
     """
     Create and return room 1.
-    If your program gets large, you may want to separate this into different
-    files.
     """
     room = Room()
 
-    """ Set up the game and initialize the variables. """
     # Sprite lists
     room.wall_list = arcade.SpriteList()
+    # room.floor_list = arcade.SpriteList()
 
-    # -- Set up the walls
-    # Create bottom and top row of boxes
-    # This y loops a list of two, the coordinate 0, and just under the top of window
-    for y in (0, SCREEN_HEIGHT - SPRITE_SIZE):
-        # Loop for each box going across
-        for x in range(0, SCREEN_WIDTH, SPRITE_SIZE):
-            wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", SPRITE_SCALING)
-            wall.left = x
-            wall.bottom = y
-            room.wall_list.append(wall)
+    # --- Set up the walls ---
+    # Nota: 'muro' es vertical y 'muro2' es horizontal
+    # Fila de abajo y arriba de pared
+    for y in (0, SCREEN_HEIGHT - ANCHO_MURO):
+        for x in range(0, SCREEN_WIDTH, LARGO_MURO):
+            muro = arcade.Sprite("sprites_master\\Muro2.png")
+            muro.left = x
+            muro.bottom = y
+            room.wall_list.append(muro)
 
-    # Create left and right column of boxes
-    for x in (0, SCREEN_WIDTH - SPRITE_SIZE):
-        # Loop for each box going across
-        for y in range(SPRITE_SIZE, SCREEN_HEIGHT - SPRITE_SIZE, SPRITE_SIZE):
-            # Skip making a block 4 and 5 blocks up on the right side
-            if (y != SPRITE_SIZE * 4 and y != SPRITE_SIZE * 5) or x == 0:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", SPRITE_SCALING)
-                wall.left = x
-                wall.bottom = y
-                room.wall_list.append(wall)
+    # Fila de la izquierda y la derecha
+    for x in (0, SCREEN_WIDTH - ANCHO_MURO):
+        for y in range(0, SCREEN_HEIGHT - ANCHO_MURO, LARGO_MURO):
+            muro = arcade.Sprite("sprites_master\\Muro.png")
+            if not (300 <= y <= 400) or x == 0:  # Agujero en la parte izquierda para pasar a la siguiente habitacion
+                muro.left = x
+                muro.bottom = y
+                room.wall_list.append(muro)
 
-    wall = arcade.Sprite(":resources:images/tiles/grassHill_left.png", SPRITE_SCALING)
-    wall.left = 7 * SPRITE_SIZE
-    wall.bottom = 5 * SPRITE_SIZE
-    room.wall_list.append(wall)
+    # Poner suelo
+    # Con pequeños trozos de suelo
+    # for x in range(ANCHO_MURO, SCREEN_WIDTH - TAM_SUELO, TAM_SUELO):  # NO cabe muy bien
+    #    for y in range(ANCHO_MURO, SCREEN_HEIGHT - TAM_SUELO, TAM_SUELO):
+    #        suelo = arcade.Sprite("sprites_master\\SueloPequeño.png")
+    #        suelo.left = x
+    #        suelo.bottom = y
+    #        room.floor_list.append(suelo)
+
 
     # If you want coins or monsters in a level, then add that code here.
-
     # Load the background image for this level.
-    room.background = arcade.load_texture(":resources:images/backgrounds/abstract_1.jpg")
+    # room.background = arcade.load_texture("ruta")
 
     return room
 
@@ -76,39 +83,32 @@ def setup_room_2():
     """
     room = Room()
 
-    """ Set up the game and initialize the variables. """
     # Sprite lists
     room.wall_list = arcade.SpriteList()
 
-    # -- Set up the walls
-    # Create bottom and top row of boxes
-    # This y loops a list of two, the coordinate 0, and just under the top of window
-    for y in (0, SCREEN_HEIGHT - SPRITE_SIZE):
-        # Loop for each box going across
-        for x in range(0, SCREEN_WIDTH, SPRITE_SIZE):
-            wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", SPRITE_SCALING)
-            wall.left = x
-            wall.bottom = y
-            room.wall_list.append(wall)
+    # --- Set up the walls ---
+    # Fila de abajo y arriba de pared
+    for y in (0, SCREEN_HEIGHT - ANCHO_MURO):
+        for x in range(0, SCREEN_WIDTH, LARGO_MURO):
+            muro = arcade.Sprite("sprites_master\\Muro2.png")
+            muro.left = x
+            muro.bottom = y
+            room.wall_list.append(muro)
 
-    # Create left and right column of boxes
-    for x in (0, SCREEN_WIDTH - SPRITE_SIZE):
-        # Loop for each box going across
-        for y in range(SPRITE_SIZE, SCREEN_HEIGHT - SPRITE_SIZE, SPRITE_SIZE):
-            # Skip making a block 4 and 5 blocks up
-            if (y != SPRITE_SIZE * 4 and y != SPRITE_SIZE * 5) or x != 0:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", SPRITE_SCALING)
-                wall.left = x
-                wall.bottom = y
-                room.wall_list.append(wall)
+    # Fila de la izquierda y la derecha
+    for x in (0, SCREEN_WIDTH - ANCHO_MURO):
+        for y in range(0, SCREEN_HEIGHT - ANCHO_MURO, LARGO_MURO):
+            muro = arcade.Sprite("sprites_master\\Muro.png")
+            # Agujero en la parte derecha para pasar a la habitacion anterior
+            if not (300 <= y <= 400) or x == SCREEN_WIDTH - ANCHO_MURO:
+                muro.left = x
+                muro.bottom = y
+                room.wall_list.append(muro)
 
-    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", SPRITE_SCALING)
-    wall.left = 5 * SPRITE_SIZE
-    wall.bottom = 6 * SPRITE_SIZE
-    room.wall_list.append(wall)
-    room.background = arcade.load_texture(":resources:images/backgrounds/abstract_2.jpg")
+    # room.background = arcade.load_texture("ruta")
 
     return room
+
 
 class SteamPunkGame(arcade.Window):
     """ Ventana principal del juego """
@@ -118,37 +118,53 @@ class SteamPunkGame(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Juego")  # Poner nombre del juego
         # Sprite lists
         self.player_list = None
-        self.wall_list = None
+        # Habitacion
+        self.current_room = 0
+        self.rooms = None
         # Set up the player
         self.player_sprite = None
-        # Physics engine
         self.physics_engine = None
 
     def setup(self):
         arcade.set_background_color(arcade.color.WOOD_BROWN)
         # Sprite lists
         self.player_list = arcade.SpriteList()
-        self.wall_list = arcade.SpriteList()
         # Create the player
-        self.player_sprite = arcade.Sprite("C:\\Users\\Rotrex\\Desktop\\Apuntes y Trabajos\\Cuatri 2\\Videojuegos"
-                                           "\\Sprites prestados prueba\\heroe.png", SPRITE_SCALING_PLAYER)
+        self.player_sprite = arcade.Sprite('sprites_master\\PERSONAJE10.png')
         self.player_sprite.center_x = 100
         self.player_sprite.center_y = 100
         self.player_list.append(self.player_sprite)
+        # Rooms
+        self.rooms = []  # lista de todas las habitaciones
+        room = setup_room_1()  # convendria hacer un for cuando se pongan mas
+        self.rooms.append(room)
 
-        # Fisicas
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
+        room = setup_room_2()
+        self.rooms.append(room)
+        self.current_room = 0  # habitacion inicial
+        # Fisicas para la habitacion en la que estemos
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.rooms[self.current_room].wall_list)
 
     def on_draw(self):
         arcade.start_render()
-        self.wall_list.draw()
+        self.rooms[self.current_room].wall_list.draw()
+        # self.rooms[self.current_room].floor_list.draw()
         self.player_list.draw()
-        # texto_pantalla = "____"
-        # arcade.draw_text(texto_pantalla, self.view_left + 10, self.view_bottom + 20, arcade.color.BLACK, 14)
 
     def update(self, delta_time):
-        # Update each of the sprites
+        # Actualizar todos los sprites
         self.physics_engine.update()
+        # Mirar en que habitación estamos y si necesitamos cambiar a otra
+        if self.player_sprite.center_x > SCREEN_WIDTH and self.current_room == 0:
+            self.current_room = 1
+            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+                                                             self.rooms[self.current_room].wall_list)
+            self.player_sprite.center_x = ANCHO_MURO + 1
+        elif self.player_sprite.center_x < 0 and self.current_room == 1:
+            self.current_room = 0
+            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+                                                             self.rooms[self.current_room].wall_list)
+            self.player_sprite.center_x = SCREEN_WIDTH
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
