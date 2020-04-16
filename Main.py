@@ -1,5 +1,5 @@
 import arcade
-
+import Jugador
 # --- Constantes ---
 
 # SPRITE_SCALING_BOX = 0.5
@@ -122,7 +122,7 @@ class SteamPunkGame(arcade.Window):
         self.current_room = 0
         self.rooms = None
         # Set up the player
-        self.player_sprite = None
+        self.jugador = None
         self.physics_engine = None
 
     def setup(self):
@@ -130,10 +130,10 @@ class SteamPunkGame(arcade.Window):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         # Create the player
-        self.player_sprite = arcade.Sprite('sprites_master\\PERSONAJE10.png')
-        self.player_sprite.center_x = 100
-        self.player_sprite.center_y = 100
-        self.player_list.append(self.player_sprite)
+        self.jugador = Jugador.Jugador()  # OJO!
+        self.jugador.center_x = 100
+        self.jugador.center_y = 100
+        self.player_list.append(self.jugador)
         # Rooms
         self.rooms = []  # lista de todas las habitaciones
         room = setup_room_1()  # convendria hacer un for cuando se pongan mas
@@ -143,7 +143,7 @@ class SteamPunkGame(arcade.Window):
         self.rooms.append(room)
         self.current_room = 0  # habitacion inicial
         # Fisicas para la habitacion en la que estemos
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.rooms[self.current_room].wall_list)
+        self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
 
     def on_draw(self):
         arcade.start_render()
@@ -151,38 +151,39 @@ class SteamPunkGame(arcade.Window):
         # self.rooms[self.current_room].floor_list.draw()
         self.player_list.draw()
 
-    def update(self, delta_time):
+    def on_update(self, delta_time: float = 1 / 60):
         # Actualizar todos los sprites
         self.physics_engine.update()
+        self.jugador.update_animation()
         # Mirar en que habitación estamos y si necesitamos cambiar a otra
-        if self.player_sprite.center_x > SCREEN_WIDTH and self.current_room == 0:
+        if self.jugador.center_x > SCREEN_WIDTH and self.current_room == 0:
             self.current_room = 1
-            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+            self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
-            self.player_sprite.center_x = ANCHO_MURO + 1
-        elif self.player_sprite.center_x < 0 and self.current_room == 1:
+            self.jugador.center_x = ANCHO_MURO + 1
+        elif self.jugador.center_x < 0 and self.current_room == 1:
             self.current_room = 0
-            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+            self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
-            self.player_sprite.center_x = SCREEN_WIDTH
+            self.jugador.center_x = SCREEN_WIDTH
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
         if key == arcade.key.UP or key == arcade.key.W:
-            self.player_sprite.change_y = MOVEMENT_SPEED
+            self.jugador.change_y = MOVEMENT_SPEED
         elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_sprite.change_y = -MOVEMENT_SPEED
+            self.jugador.change_y = -MOVEMENT_SPEED
         elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.player_sprite.change_x = -MOVEMENT_SPEED
+            self.jugador.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.player_sprite.change_x = MOVEMENT_SPEED
+            self.jugador.change_x = MOVEMENT_SPEED
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
         if key == arcade.key.UP or key == arcade.key.DOWN or key == arcade.key.W or key == arcade.key.S:
-            self.player_sprite.change_y = 0
+            self.jugador.change_y = 0
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT or key == arcade.key.A or key == arcade.key.D:
-            self.player_sprite.change_x = 0
+            self.jugador.change_x = 0
 
 
 def main():
