@@ -86,26 +86,12 @@ def setup_room_2():
     # Sprite lists
     room.wall_list = arcade.SpriteList()
 
-    # --- Set up the walls ---
-    # Fila de abajo y arriba de pared
-    for y in (0, SCREEN_HEIGHT - ANCHO_MURO):
-        for x in range(0, SCREEN_WIDTH, LARGO_MURO):
-            muro = arcade.Sprite("sprites_master\\Muro2.png")
-            muro.left = x
-            muro.bottom = y
-            room.wall_list.append(muro)
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("test.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")
 
-    # Fila de la izquierda y la derecha
-    for x in (0, SCREEN_WIDTH - ANCHO_MURO):
-        for y in range(0, SCREEN_HEIGHT - ANCHO_MURO, LARGO_MURO):
-            muro = arcade.Sprite("sprites_master\\Muro.png")
-            # Agujero en la parte derecha para pasar a la habitacion anterior
-            if not (300 <= y <= 400) or x == SCREEN_WIDTH - ANCHO_MURO:
-                muro.left = x
-                muro.bottom = y
-                room.wall_list.append(muro)
-
-    # room.background = arcade.load_texture("ruta")
+    # Definir muros
+    room.wall_list = obstaculos
 
     return room
 
