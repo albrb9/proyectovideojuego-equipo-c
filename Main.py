@@ -157,10 +157,12 @@ class SteamPunkGame(arcade.Window):
             self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
             self.jugador.center_x = ANCHO_MURO + 1
+            self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
         elif self.jugador.center_x < 0 and self.current_room == 1:
             self.current_room = 0
             self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
+            self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
             self.jugador.center_x = SCREEN_WIDTH
 
         # Actualizar balas jugador
@@ -171,7 +173,6 @@ class SteamPunkGame(arcade.Window):
             # Si choca contra una pared, eliminar la bala
             if len(hit_list) > 0:
                 bala.remove_from_sprite_lists()
-
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
