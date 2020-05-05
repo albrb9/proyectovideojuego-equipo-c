@@ -32,6 +32,7 @@ class Jugador(arcade.Sprite):
 
         # Dirección a la que mira por defecto
         self.character_face_direction = RIGHT_FACING  # tiene valores del 0 al 3
+        self.bloq_direccion = False
         # Booleano para saber si estamos disparando
         self.disparando = False
         self.contador_remove_pistola = 0
@@ -83,18 +84,24 @@ class Jugador(arcade.Sprite):
             bala.center_x = jugador.center_x
             bala.change_y = -velocidad_disparo
         return bala
+    def bloquear_direccion(self):
+        self.bloq_direccion = True
+
+    def desbloquear_direccion(self):
+        self.bloq_direccion = False
 
     def update_animation(self, delta_time: float = 1 / 60):
         """Utilizado para actualizar la animación del jugador"""
         # Vemos adonde tenemos que mirar
-        if self.change_x < 0 and (self.character_face_direction == RIGHT_FACING or UP_FACING or DOWN_FACING):
-            self.character_face_direction = LEFT_FACING
-        elif self.change_x > 0 and (self.character_face_direction == LEFT_FACING or UP_FACING or DOWN_FACING):
-            self.character_face_direction = RIGHT_FACING
-        elif self.change_y < 0 and (self.character_face_direction == RIGHT_FACING or LEFT_FACING or UP_FACING):
-            self.character_face_direction = DOWN_FACING
-        elif self.change_y > 0 and (self.character_face_direction == RIGHT_FACING or LEFT_FACING or DOWN_FACING):
-            self.character_face_direction = UP_FACING
+        if not self.bloq_direccion:
+            if self.change_x < 0 and (self.character_face_direction == RIGHT_FACING or UP_FACING or DOWN_FACING):
+                self.character_face_direction = LEFT_FACING
+            elif self.change_x > 0 and (self.character_face_direction == LEFT_FACING or UP_FACING or DOWN_FACING):
+                self.character_face_direction = RIGHT_FACING
+            elif self.change_y < 0 and (self.character_face_direction == RIGHT_FACING or LEFT_FACING or UP_FACING):
+                self.character_face_direction = DOWN_FACING
+            elif self.change_y > 0 and (self.character_face_direction == RIGHT_FACING or LEFT_FACING or DOWN_FACING):
+                self.character_face_direction = UP_FACING
 
         # Si no hemos disparado en 2s quitar la pistola
         if self.disparando:

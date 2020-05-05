@@ -13,10 +13,6 @@ SCREEN_HEIGHT = 900
 
 MOVEMENT_SPEED = 5
 
-LARGO_MURO = 50
-ANCHO_MURO = 10
-TAM_SUELO = 50  # Tamaño de cada "cuadro" de suelo
-
 
 class Room:
     """
@@ -27,11 +23,7 @@ class Room:
     def __init__(self):
         # You may want many lists. Lists for coins, monsters, etc.
         self.wall_list = None
-        # self.floor_list = None
-
-        # This holds the background images. If you don't want changing
-        # background images, you can delete this part.
-        # self.background = None
+        self.background = None
 
 
 def setup_room_1():
@@ -42,40 +34,14 @@ def setup_room_1():
 
     # Sprite lists
     room.wall_list = arcade.SpriteList()
-    # room.floor_list = arcade.SpriteList()
 
-    # --- Set up the walls ---
-    # Nota: 'muro' es vertical y 'muro2' es horizontal
-    # Fila de abajo y arriba de pared
-    for y in (0, SCREEN_HEIGHT - ANCHO_MURO):
-        for x in range(0, SCREEN_WIDTH, LARGO_MURO):
-            muro = arcade.Sprite("sprites_master" + os.path.sep + "Muro2.png")
-            muro.left = x
-            muro.bottom = y
-            room.wall_list.append(muro)
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION1.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION1.png")
 
-    # Fila de la izquierda y la derecha
-    for x in (0, SCREEN_WIDTH - ANCHO_MURO):
-        for y in range(0, SCREEN_HEIGHT - ANCHO_MURO, LARGO_MURO):
-            muro = arcade.Sprite("sprites_master" + os.path.sep + "Muro.png")
-            if not (300 <= y <= 400) or x == 0:  # Agujero en la parte izquierda para pasar a la siguiente habitacion
-                muro.left = x
-                muro.bottom = y
-                room.wall_list.append(muro)
-
-    # Poner suelo
-    # Con pequeños trozos de suelo
-    # for x in range(ANCHO_MURO, SCREEN_WIDTH - TAM_SUELO, TAM_SUELO):  # NO cabe muy bien
-    #    for y in range(ANCHO_MURO, SCREEN_HEIGHT - TAM_SUELO, TAM_SUELO):
-    #        suelo = arcade.Sprite("sprites_master" + os.path.sep + "SueloPequeño.png")
-    #        suelo.left = x
-    #        suelo.bottom = y
-    #        room.floor_list.append(suelo)
-
-    # If you want coins or monsters in a level, then add that code here.
-    # Load the background image for this level.
-    # room.background = arcade.load_texture("ruta")
-
+    # Definir muros
+    room.wall_list = obstaculos
     return room
 
 
@@ -89,8 +55,9 @@ def setup_room_2():
     room.wall_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("test.tmx")
-    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS3.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS3.png")
 
     # Definir muros
     room.wall_list = obstaculos
@@ -123,8 +90,8 @@ class SteamPunkGame(arcade.Window):
         self.bullet_list = arcade.SpriteList()
         # Create the player
         self.jugador = Jugador.Jugador()  # OJO!
-        self.jugador.center_x = 100
-        self.jugador.center_y = 100
+        self.jugador.center_x = 350
+        self.jugador.center_y = 350
         self.player_list.append(self.jugador)
 
         # Rooms
@@ -140,8 +107,11 @@ class SteamPunkGame(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
+        # Draw the background texture
+        arcade.draw_lrwh_rectangle_textured(0, 0,
+                                            SCREEN_WIDTH, SCREEN_HEIGHT,
+                                            self.rooms[self.current_room].background)
         self.rooms[self.current_room].wall_list.draw()
-        # self.rooms[self.current_room].floor_list.draw()
         self.player_list.draw()
         self.bullet_list.draw()
 
@@ -152,18 +122,18 @@ class SteamPunkGame(arcade.Window):
         self.bullet_list.update()
 
         # Mirar en que habitación estamos y si necesitamos cambiar a otra
-        if self.jugador.center_x > SCREEN_WIDTH and self.current_room == 0:
+        if self.jugador.center_x > SCREEN_WIDTH-110 and self.current_room == 0:  # 0-->1
             self.current_room = 1
             self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
-            self.jugador.center_x = ANCHO_MURO + 1
+            self.jugador.center_x = 110
             self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
-        elif self.jugador.center_x < 0 and self.current_room == 1:
+        elif self.jugador.center_x < 110 and self.current_room == 1:  # 1-->0
             self.current_room = 0
             self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
             self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
-            self.jugador.center_x = SCREEN_WIDTH
+            self.jugador.center_x = SCREEN_WIDTH - 110
 
         # Actualizar balas jugador
         # Loop through each bullet
@@ -185,11 +155,14 @@ class SteamPunkGame(arcade.Window):
             self.jugador.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.jugador.change_x = MOVEMENT_SPEED
-
         # Disparo
         if key == arcade.key.Q:
             bala = self.jugador.disparar(self.jugador, self.velocidad_disparo)
             self.bullet_list.append(bala)
+        # Bloquear direccion a la que mira el personaje (hay que mantener)
+        if key == arcade.key.SPACE:
+            self.jugador.bloquear_direccion()
+
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
@@ -197,6 +170,9 @@ class SteamPunkGame(arcade.Window):
             self.jugador.change_y = 0
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT or key == arcade.key.A or key == arcade.key.D:
             self.jugador.change_x = 0
+        # Desbloquear direccion a la que mira el personaje
+        if key == arcade.key.SPACE:
+            self.jugador.desbloquear_direccion()
 
 
 def main():
