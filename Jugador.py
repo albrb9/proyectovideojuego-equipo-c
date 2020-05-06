@@ -38,6 +38,7 @@ class Jugador(arcade.Sprite):
         self.contador_remove_pistola = 0
         # Used for flipping between image sequences
         self.cur_texture = 0
+        self.cur_texture_pistola = 0
 
         # ---Cargar texturas---
         self.textura_quieto = load_texture_4dir("sprites_master" + os.path.sep + "PERSONAJE10.png",
@@ -56,6 +57,17 @@ class Jugador(arcade.Sprite):
                                                               i - 3),
                                                           "sprites_master" + os.path.sep + "PERSONAJE{}.png".format(
                                                               i - 6)))
+        self.textura_andando_pistola = []
+        for i in (17, 18):
+            # Cargamos texturas 21 y 22 (derecha moviendo los pies)
+            # 23 y 24 (arriba moviendo los pies)
+            # 17 y 18 (abajo moviendo los pies)
+            self.textura_andando_pistola.append(
+                load_texture_4dir("sprites_master" + os.path.sep + "PERSONAJE{}.png".format(i + 4),
+                                  "sprites_master" + os.path.sep + "PERSONAJE{}.png".format(
+                                      i + 6),
+                                  "sprites_master" + os.path.sep + "PERSONAJE{}.png".format(
+                                      i)))
 
     def disparar(self, jugador, velocidad_disparo):
         """ArcadeSprite, int ---> ArcadeSprite
@@ -84,6 +96,7 @@ class Jugador(arcade.Sprite):
             bala.center_x = jugador.center_x
             bala.change_y = -velocidad_disparo
         return bala
+
     def bloquear_direccion(self):
         self.bloq_direccion = True
 
@@ -106,22 +119,29 @@ class Jugador(arcade.Sprite):
         # Si no hemos disparado en 2s quitar la pistola
         if self.disparando:
             self.contador_remove_pistola += 1
-            if self.contador_remove_pistola == 120:   # LLevamos 2s sin disparar
+            if self.contador_remove_pistola == 120:  # LLevamos 2s sin disparar
                 self.disparando = False
                 self.contador_remove_pistola = 0
             # Animación estando quieto con pistola
             if self.change_x == 0 and self.change_y == 0:
                 self.texture = self.textura_quieto_pistola[self.character_face_direction]
                 return  # si entramos en este if no debemos mirar nada más de actualizar texturas
+            # Animación moviendose con pistola
+            else:
+                self.cur_texture_pistola += 1
+                if self.cur_texture_pistola >= NUM_TEXTURAS_ANDAR * UPDATES_PER_FRAME:
+                    self.cur_texture_pistola = 0
+                self.texture = self.textura_andando_pistola[self.cur_texture_pistola // UPDATES_PER_FRAME][
+                    self.character_face_direction]
         elif not self.disparando:
             # Animación estando quieto
             if self.change_x == 0 and self.change_y == 0:
                 self.texture = self.textura_quieto[self.character_face_direction]
                 return  # si entramos en este if no debemos mirar nada más de actualizar texturas
 
-        # Walking animation
-        self.cur_texture += 1
-        if self.cur_texture >= NUM_TEXTURAS_ANDAR * UPDATES_PER_FRAME:
-            self.cur_texture = 0
-        self.texture = self.textura_andando[self.cur_texture // UPDATES_PER_FRAME][
-            self.character_face_direction]
+            # Animacion andando sin pistola
+            self.cur_texture += 1
+            if self.cur_texture >= NUM_TEXTURAS_ANDAR * UPDATES_PER_FRAME:
+                self.cur_texture = 0
+            self.texture = self.textura_andando[self.cur_texture // UPDATES_PER_FRAME][
+                self.character_face_direction]

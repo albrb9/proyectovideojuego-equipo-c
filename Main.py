@@ -122,7 +122,7 @@ class SteamPunkGame(arcade.Window):
         self.bullet_list.update()
 
         # Mirar en que habitación estamos y si necesitamos cambiar a otra
-        if self.jugador.center_x > SCREEN_WIDTH-110 and self.current_room == 0:  # 0-->1
+        if self.jugador.center_x > SCREEN_WIDTH - 110 and self.current_room == 0:  # 0-->1
             self.current_room = 1
             self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
@@ -162,7 +162,6 @@ class SteamPunkGame(arcade.Window):
         # Bloquear direccion a la que mira el personaje (hay que mantener)
         if key == arcade.key.SPACE:
             self.jugador.bloquear_direccion()
-
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
