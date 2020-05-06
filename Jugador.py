@@ -38,7 +38,6 @@ class Jugador(arcade.Sprite):
         self.contador_remove_pistola = 0
         # Used for flipping between image sequences
         self.cur_texture = 0
-        self.cur_texture_pistola = 0
 
         # ---Cargar texturas---
         self.textura_quieto = load_texture_4dir("sprites_master" + os.path.sep + "PERSONAJE10.png",
@@ -57,6 +56,8 @@ class Jugador(arcade.Sprite):
                                                               i - 3),
                                                           "sprites_master" + os.path.sep + "PERSONAJE{}.png".format(
                                                               i - 6)))
+        # Sonidos
+        self.sonido_disparar = arcade.load_sound("Sonidos" + os.path.sep + "Disparo prota.wav")
         self.textura_andando_pistola = []
         for i in (17, 18):
             # Cargamos texturas 21 y 22 (derecha moviendo los pies)
@@ -78,6 +79,8 @@ class Jugador(arcade.Sprite):
         self.contador_remove_pistola = 0
         # Crear la bala
         bala = arcade.Sprite("sprites_master" + os.path.sep + "BALA.png")
+        # Ponemos el sonido
+        self.sonido_disparar.play()
         # Calcular su trayectoria y su posicion de spawn
         if self.character_face_direction == RIGHT_FACING:
             bala.left = jugador.right
@@ -128,10 +131,10 @@ class Jugador(arcade.Sprite):
                 return  # si entramos en este if no debemos mirar nada más de actualizar texturas
             # Animación moviendose con pistola
             else:
-                self.cur_texture_pistola += 1
-                if self.cur_texture_pistola >= NUM_TEXTURAS_ANDAR * UPDATES_PER_FRAME:
-                    self.cur_texture_pistola = 0
-                self.texture = self.textura_andando_pistola[self.cur_texture_pistola // UPDATES_PER_FRAME][
+                self.cur_texture += 1
+                if self.cur_texture >= NUM_TEXTURAS_ANDAR * UPDATES_PER_FRAME:
+                    self.cur_texture = 0
+                self.texture = self.textura_andando_pistola[self.cur_texture // UPDATES_PER_FRAME][
                     self.character_face_direction]
         elif not self.disparando:
             # Animación estando quieto
