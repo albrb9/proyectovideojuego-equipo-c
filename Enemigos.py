@@ -48,6 +48,7 @@ class Masked(arcade.Sprite):
 
         self.set_hit_box(self.texture.hit_box_points)
 
+
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
         # Saber si hay que mirar hacia la derecha, izquierda, arriba o abajo.
@@ -98,6 +99,8 @@ class Skeleton(arcade.Sprite):
 
         self.sonido_disparar = arcade.load_sound("Sonidos/Disparo pew.wav")
 
+        self.lista_laser = arcade.SpriteList()
+
     def disparar(self, skeleton, velocidad_disparo):
         laser = arcade.Sprite("sprites_master/LASER.png")
         self.sonido_disparar.play()
@@ -117,7 +120,9 @@ class Skeleton(arcade.Sprite):
             laser.top = skeleton.bottom
             laser.center_x = skeleton.center_x
             laser.change_y = -velocidad_disparo
-        return laser
+        self.lista_laser.append(laser)
+
+
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
@@ -140,6 +145,8 @@ class Skeleton(arcade.Sprite):
             self.cur_texture = 0
         self.texture = self.textura_andando[self.cur_texture // UPDATES_PER_FRAME][
             self.character_face_direction]
+
+        self.lista_laser()
 
 
 class Gasmasked(arcade.Sprite):
@@ -169,6 +176,8 @@ class Gasmasked(arcade.Sprite):
 
         self.sonido_disparar = arcade.load_sound("Sonidos/Ataque Gas.wav")
 
+        self.lista_gases = arcade.SpriteList()
+
     def disparar(self, gasmasked, velocidad_disparo):
 
         proyectil_gaseoso = arcade.Sprite("sprites_master/GASATTACK.png")
@@ -190,7 +199,7 @@ class Gasmasked(arcade.Sprite):
             proyectil_gaseoso.top = gasmasked.bottom
             proyectil_gaseoso.center_x = gasmasked.center_x
             proyectil_gaseoso.change_y = -velocidad_disparo
-        return proyectil_gaseoso
+        self.lista_laser.append(proyectil_gaseoso)
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
@@ -213,3 +222,5 @@ class Gasmasked(arcade.Sprite):
             self.cur_texture = 0
         self.texture = self.textura_andando[self.cur_texture // UPDATES_PER_FRAME][
             self.character_face_direction]
+
+        self.lista_gases.update()

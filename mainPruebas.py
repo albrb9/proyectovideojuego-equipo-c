@@ -28,6 +28,7 @@ class Room:
 
 
 
+
 def setup_room_1():
     """
     Create and return room 1.
@@ -152,6 +153,7 @@ class SteamPunkGame(arcade.Window):
         self.physics_engine.update()
         self.jugador.update_animation()
         self.bullet_list.update()
+        
 
 
         # Mirar en que habitación estamos y si necesitamos cambiar a otra
