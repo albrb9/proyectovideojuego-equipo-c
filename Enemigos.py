@@ -28,7 +28,7 @@ class Masked(arcade.Sprite):
     def __init__(self):
         """Constructor del sprite del jugador"""
         super().__init__()
-        self.character_face_direction = RIGHT_FACING
+        self.character_face_direction = DOWN_FACING
 
         self.cur_texture = 0
 
@@ -44,7 +44,7 @@ class Masked(arcade.Sprite):
                                         f"sprites_master/MASKED{i - 3}.png")
             self.textura_andar.append(texture)
 
-        self.texture = self.textura_quieto[0]
+        self.texture = self.textura_quieto[3]
 
         self.set_hit_box(self.texture.hit_box_points)
 
@@ -76,7 +76,7 @@ class Skeleton(arcade.Sprite):
         """Constructor del sprite del jugador"""
         super().__init__()
 
-        self.character_face_direction = RIGHT_FACING
+        self.character_face_direction = UP_FACING
 
         self.cur_texture = 0
 
@@ -92,12 +92,32 @@ class Skeleton(arcade.Sprite):
                                         f"sprites_master/ESQUELETO{i - 3}.png")
             self.textura_andar.append(texture)
 
-        self.texture = self.textura_quieto[0]
+        self.texture = self.textura_quieto[2]
 
         self.set_hit_box(self.texture.hit_box_points)
 
+        self.sonido_disparar = arcade.load_sound("Sonidos/Disparo pew.wav")
+
     def disparar(self, skeleton, velocidad_disparo):
         laser = arcade.Sprite("sprites_master/LASER.png")
+        self.sonido_disparar.play()
+        if self.character_face_direction == RIGHT_FACING:
+            laser.left = skeleton.right
+            laser.center_y = skeleton.center_y
+            laser.change_x = velocidad_disparo
+        elif self.character_face_direction == LEFT_FACING:
+            laser.right = skeleton.left
+            laser.center_y = skeleton.center_y
+            laser.change_x = -velocidad_disparo
+        elif self.character_face_direction == UP_FACING:
+            laser.bottom = skeleton.top
+            laser.center_x = skeleton.center_x
+            laser.change_y = velocidad_disparo
+        elif self.character_face_direction == DOWN_FACING:
+            laser.top = skeleton.bottom
+            laser.center_x = skeleton.center_x
+            laser.change_y = -velocidad_disparo
+        return laser
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
@@ -154,6 +174,23 @@ class Gasmasked(arcade.Sprite):
         proyectil_gaseoso = arcade.Sprite("sprites_master/GASATTACK.png")
         self.sonido_disparar.play()
 
+        if self.character_face_direction == RIGHT_FACING:
+            proyectil_gaseoso.left = gasmasked.right
+            proyectil_gaseoso.center_y = gasmasked.center_y
+            proyectil_gaseoso.change_x = velocidad_disparo
+        elif self.character_face_direction == LEFT_FACING:
+            proyectil_gaseoso.right = gasmasked.left
+            proyectil_gaseoso.center_y = gasmasked.center_y
+            proyectil_gaseoso.change_x = -velocidad_disparo
+        elif self.character_face_direction == UP_FACING:
+            proyectil_gaseoso.bottom = gasmasked.top
+            proyectil_gaseoso.center_x = gasmasked.center_x
+            proyectil_gaseoso.change_y = velocidad_disparo
+        elif self.character_face_direction == DOWN_FACING:
+            proyectil_gaseoso.top = gasmasked.bottom
+            proyectil_gaseoso.center_x = gasmasked.center_x
+            proyectil_gaseoso.change_y = -velocidad_disparo
+        return proyectil_gaseoso
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 

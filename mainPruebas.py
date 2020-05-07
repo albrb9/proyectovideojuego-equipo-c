@@ -24,9 +24,8 @@ class Room:
         # You may want many lists. Lists for coins, monsters, etc.
         self.wall_list = None
         self.background = None
-        self.masked_list = None
-        self.gasmask_list = None
-        self.skeleton_list = None
+        self.enemigos_list = None
+
 
 
 def setup_room_1():
@@ -37,12 +36,9 @@ def setup_room_1():
 
     # Sprite lists
     room.wall_list = arcade.SpriteList()
-    room.masked_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
 
-    masked = Enemigos.Masked()  # OJO!
-    masked.center_x = 700
-    masked.center_y = 700
-    room.masked_list.append(masked)
+
 
 
     # Tile map
@@ -63,7 +59,22 @@ def setup_room_2():
 
     # Sprite lists
     room.wall_list = arcade.SpriteList()
-    room.skeleton_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+
+    skeleton = Enemigos.Skeleton()
+    skeleton.center_x = 450
+    skeleton.center_y = 200
+    room.enemigos_list.append(skeleton)
+
+    masked = Enemigos.Masked()
+    masked.center_x = 450
+    masked.center_y = 800
+    room.enemigos_list.append(masked)
+
+    gasmasked = Enemigos.Gasmasked()
+    gasmasked.center_x = 750
+    gasmasked.center_y = 475
+    room.enemigos_list.append(gasmasked)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS3.tmx")
@@ -131,8 +142,8 @@ class SteamPunkGame(arcade.Window):
         self.rooms[self.current_room].wall_list.draw()
         self.player_list.draw()
         self.bullet_list.draw()
-        self.rooms[self.current_room].masked_list.draw()
-        self.rooms[self.current_room].skeleton_list.draw()
+        self.rooms[self.current_room].enemigos_list.draw()
+
 
 
 
@@ -165,14 +176,11 @@ class SteamPunkGame(arcade.Window):
             # Si choca contra una pared, eliminar la bala
             if len(hit_list) > 0:
                 bala.remove_from_sprite_lists()
-            # Mirar si choca contra un enemigo masked
-            hit_list2 = arcade.check_for_collision_with_list(bala,self.rooms[self.current_room].masked_list)
+            # Mirar si choca contra un enemigo
+            hit_list2 = arcade.check_for_collision_with_list(bala,self.rooms[self.current_room].enemigos_list)
             if len(hit_list2) > 0:
                 bala.remove_from_sprite_lists()
-            # Mirar si choca contra un skeleton
-            hit_list3 = arcade.check_for_collision_with_list(bala,self.rooms[self.current_room].skeleton_list)
-            if len(hit_list3) > 0:
-                bala.remove_from_sprite_lists()
+
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
