@@ -1,7 +1,7 @@
 import arcade
 import Jugador
 import os
-import math
+import HUD
 
 # --- Constantes ---
 
@@ -114,6 +114,8 @@ class SteamPunkGame(arcade.Window):
         self.rooms[self.current_room].wall_list.draw()
         self.player_list.draw()
         self.bullet_list.draw()
+        HUD.dibujar_hud()
+
 
     def on_update(self, delta_time: float = 1 / 60):
         # Actualizar todos los sprites
@@ -122,18 +124,18 @@ class SteamPunkGame(arcade.Window):
         self.bullet_list.update()
 
         # Mirar en que habitación estamos y si necesitamos cambiar a otra
-        if self.jugador.center_x > SCREEN_WIDTH - 110 and self.current_room == 0:  # 0-->1
+        if self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 0:  # 0-->1
             self.current_room = 1
             self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
-            self.jugador.center_x = 110
+            self.jugador.center_y = 110
             self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
-        elif self.jugador.center_x < 110 and self.current_room == 1:  # 1-->0
+        elif self.jugador.center_y < 110 and self.current_room == 1:  # 1-->0
             self.current_room = 0
             self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                              self.rooms[self.current_room].wall_list)
             self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
-            self.jugador.center_x = SCREEN_WIDTH - 110
+            self.jugador.center_y = SCREEN_HEIGHT - 110
 
         # Actualizar balas jugador
         # Loop through each bullet
