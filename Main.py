@@ -80,11 +80,15 @@ class SteamPunkGame(arcade.Window):
         # Set up the player
         self.jugador = None
         self.physics_engine = None
-        # Variables para el disparo del jugador
+        # Atributos para el disparo del jugador
         self.velocidad_disparo = 10
+        # Atributos para el manejo del comienzo del juego
+        self.empezado = False
+        self.mirando_controles = False
+        # Pausar el juego
+        self.pausado = False
 
     def setup(self):
-        arcade.set_background_color(arcade.color.WOOD_BROWN)
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.bullet_list = arcade.SpriteList()
@@ -107,35 +111,44 @@ class SteamPunkGame(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
-        # Draw the background texture
-        arcade.draw_lrwh_rectangle_textured(0, 0,
-                                            SCREEN_WIDTH, SCREEN_HEIGHT,
-                                            self.rooms[self.current_room].background)
-        self.rooms[self.current_room].wall_list.draw()
-        self.player_list.draw()
-        self.bullet_list.draw()
-        HUD.dibujar_hud()
-
+        if self.empezado:
+            if self.pausado:
+                HUD.dibujar_hud_pausado()
+            else:
+                # Draw the background texture
+                arcade.draw_lrwh_rectangle_textured(0, 0,
+                                                    SCREEN_WIDTH, SCREEN_HEIGHT,
+                                                    self.rooms[self.current_room].background)
+                self.rooms[self.current_room].wall_list.draw()
+                self.player_list.draw()
+                self.bullet_list.draw()
+                HUD.dibujar_hud()
+        else:
+            if self.mirando_controles:
+                HUD.dibujar_controles()
+            else:
+                HUD.dibujar_pantalla_de_inicio()
 
     def on_update(self, delta_time: float = 1 / 60):
-        # Actualizar todos los sprites
-        self.physics_engine.update()
-        self.jugador.update_animation()
-        self.bullet_list.update()
+        if not self.pausado:
+            # Actualizar todos los sprites
+            self.physics_engine.update()
+            self.jugador.update_animation()
+            self.bullet_list.update()
 
-        # Mirar en que habitación estamos y si necesitamos cambiar a otra
-        if self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 0:  # 0-->1
-            self.current_room = 1
-            self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
-                                                             self.rooms[self.current_room].wall_list)
-            self.jugador.center_y = 110
-            self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
-        elif self.jugador.center_y < 110 and self.current_room == 1:  # 1-->0
-            self.current_room = 0
-            self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
-                                                             self.rooms[self.current_room].wall_list)
-            self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
-            self.jugador.center_y = SCREEN_HEIGHT - 110
+            # Mirar en que habitación estamos y si necesitamos cambiar a otra
+            if self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 0:  # 0-->1
+                self.current_room = 1
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 110
+                self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
+            elif self.jugador.center_y < 110 and self.current_room == 1:  # 1-->0
+                self.current_room = 0
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
+                self.jugador.center_y = SCREEN_HEIGHT - 110
 
         # Actualizar balas jugador
         # Loop through each bullet
@@ -148,6 +161,18 @@ class SteamPunkGame(arcade.Window):
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
+        # Comienzo del juego
+        if key == arcade.key.ENTER:
+            self.empezado = True
+        elif key == arcade.key.C:
+            self.mirando_controles = True
+        elif key == arcade.key.BACKSPACE:
+            self.mirando_controles = False
+        # Pausar el juego
+        if key == arcade.key.P and not self.pausado:
+            self.pausado = True
+        elif key == arcade.key.P and self.pausado:
+            self.pausado = False
         # Movimiento
         if key == arcade.key.UP or key == arcade.key.W:
             self.jugador.change_y = MOVEMENT_SPEED
