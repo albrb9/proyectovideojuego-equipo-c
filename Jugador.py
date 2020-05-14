@@ -26,16 +26,22 @@ def load_texture_4dir(filename_lados, filename_up, filename_down):
 
 
 class Jugador(arcade.Sprite):
+
     def __init__(self):
         """Constructor del sprite del jugador"""
         super().__init__()
 
         # Dirección a la que mira por defecto
         self.character_face_direction = RIGHT_FACING  # tiene valores del 0 al 3
+        # Booleanos para saber el estado del personaje
         self.bloq_direccion = False
-        # Booleano para saber si estamos disparando
         self.disparando = False
+        self.estado_fantasmal = False
+        self.invencible = False     # sin implementar en el main/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        # Usado para quitar la pistola a los 2s
         self.contador_remove_pistola = 0
+        # Usado para restringir el tiempo en modo fantasmal a los 10s
+        self.contador_de_muerte = 0
         # Used for flipping between image sequences
         self.cur_texture = 0
 
@@ -106,6 +112,12 @@ class Jugador(arcade.Sprite):
     def desbloquear_direccion(self):
         self.bloq_direccion = False
 
+    def activar_modo_fantasmal(self):
+        self.estado_fantasmal = True  # se utilizará para meter los sprites adecuados en update_animation
+        self.contador_de_muerte = 600  # 10s
+        self.invencible = True
+        return 8  # nueva velocidad del jugador
+
     def update_animation(self, delta_time: float = 1 / 60):
         """Utilizado para actualizar la animación del jugador"""
         # Vemos adonde tenemos que mirar
@@ -118,6 +130,12 @@ class Jugador(arcade.Sprite):
                 self.character_face_direction = DOWN_FACING
             elif self.change_y > 0 and (self.character_face_direction == RIGHT_FACING or LEFT_FACING or DOWN_FACING):
                 self.character_face_direction = UP_FACING
+
+        if self.estado_fantasmal:
+            self.contador_de_muerte -= 1
+            if self.contador_de_muerte == 0:
+                self.estado_fantasmal = False
+                # el resto de cosas que pasan cuando se acaba este modo se manejan en el update del main
 
         # Si no hemos disparado en 2s quitar la pistola
         if self.disparando:

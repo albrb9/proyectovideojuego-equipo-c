@@ -11,8 +11,6 @@ import HUD
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
 
-MOVEMENT_SPEED = 5
-
 
 class Room:
     """
@@ -24,6 +22,7 @@ class Room:
         # You may want many lists. Lists for coins, monsters, etc.
         self.wall_list = None
         self.background = None
+        # Poner lista de enemigos aqui
 
 
 def setup_room_1():
@@ -80,6 +79,7 @@ class SteamPunkGame(arcade.Window):
         # Set up the player
         self.jugador = None
         self.physics_engine = None
+        self.velocidad_jugador = 4
         # Atributos para el disparo del jugador
         self.velocidad_disparo = 10
         # Atributos para el manejo del comienzo del juego
@@ -136,6 +136,20 @@ class SteamPunkGame(arcade.Window):
             self.jugador.update_animation()
             self.bullet_list.update()
 
+            # Si estamos en modo fantasamal y nos quedamos sin tiempo
+            # --> game over
+            # Si estamos en modo fantasmal y matamos a todos los enemigos de la sala
+            # --> reset de modo fantasmal (quitar buffs y demás)
+            # Si la vida del jugador llega a 0 y tenemos disponible el modo fantasmal
+            # --> activar estado fantasmal (10s de: invencibilidad, x2 velocidad)
+
+            if self.jugador.contador_de_muerte == 0:
+                self.velocidad_jugador = 4  # codigo temporal /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+
+
+
+
             # Mirar en que habitación estamos y si necesitamos cambiar a otra
             if self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 0:  # 0-->1
                 self.current_room = 1
@@ -150,14 +164,15 @@ class SteamPunkGame(arcade.Window):
                 self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
                 self.jugador.center_y = SCREEN_HEIGHT - 110
 
-        # Actualizar balas jugador
-        # Loop through each bullet
-        for bala in self.bullet_list:
-            # Mirar si ha chocado con una pared
-            hit_list = arcade.check_for_collision_with_list(bala, self.rooms[self.current_room].wall_list)
-            # Si choca contra una pared, eliminar la bala
-            if len(hit_list) > 0:
-                bala.remove_from_sprite_lists()
+            # Actualizar balas jugador
+            # Loop through each bullet
+            for bala in self.bullet_list:
+                # Mirar si ha chocado con una pared
+                hit_list = arcade.check_for_collision_with_list(bala, self.rooms[self.current_room].wall_list)
+                # Si choca contra una pared, eliminar la bala
+                if len(hit_list) > 0:
+                    bala.remove_from_sprite_lists()
+                # Poner colisiones con enemigos y balas aqui
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -175,13 +190,13 @@ class SteamPunkGame(arcade.Window):
             self.pausado = False
         # Movimiento
         if key == arcade.key.UP or key == arcade.key.W:
-            self.jugador.change_y = MOVEMENT_SPEED
+            self.jugador.change_y = self.velocidad_jugador
         elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.jugador.change_y = -MOVEMENT_SPEED
+            self.jugador.change_y = -self.velocidad_jugador
         elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.jugador.change_x = -MOVEMENT_SPEED
+            self.jugador.change_x = -self.velocidad_jugador
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.jugador.change_x = MOVEMENT_SPEED
+            self.jugador.change_x = self.velocidad_jugador
         # Disparo
         if key == arcade.key.Q:
             bala = self.jugador.disparar(self.jugador, self.velocidad_disparo)
@@ -189,6 +204,9 @@ class SteamPunkGame(arcade.Window):
         # Bloquear direccion a la que mira el personaje (hay que mantener)
         if key == arcade.key.SPACE:
             self.jugador.bloquear_direccion()
+        # Activar modo fantasmal (PROVISIONAL, PARA PRUEBAS)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        if key == arcade.key.E and not self.jugador.estado_fantasmal:
+            self.velocidad_jugador = self.jugador.activar_modo_fantasmal()
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
