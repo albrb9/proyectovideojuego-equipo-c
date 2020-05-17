@@ -101,7 +101,7 @@ class Skeleton(arcade.Sprite):
 
         self.lista_laser = arcade.SpriteList()
 
-    def disparar(self, skeleton, velocidad_disparo):
+    def disparar(self, skeleton, velocidad_disparo_skeleton):
         laser = arcade.Sprite("sprites_master/LASER.png")
         self.sonido_disparar.play()
         if self.character_face_direction == RIGHT_FACING:
@@ -120,7 +120,38 @@ class Skeleton(arcade.Sprite):
             laser.top = skeleton.bottom
             laser.center_x = skeleton.center_x
             laser.change_y = -velocidad_disparo
-        self.lista_laser.append(laser)
+
+        start_x = Skeleton.center_x
+        start_y = Skeleton.center_y
+        # Get the destination location for the bullet
+        dest_x = self.jugador.center_x
+        dest_y = self.jugador.center_y
+
+        # Do math to calculate how to get the bullet to the destination.
+        # Calculation the angle in radians between the start points
+        # and end points. This is the angle the bullet will travel.
+        x_diff = dest_x - start_x
+        y_diff = dest_y - start_y
+        angle = math.atan2(y_diff, x_diff)
+
+        # Set the enemy to face the player.
+        enemy.angle = math.degrees(angle) - 90
+
+        # Shoot every 60 frames change of shooting each frame
+        bullet = arcade.Sprite("sprites_master/LASER.png")
+        laser.center_x = start_x
+        laser.center_y = start_y
+
+        # Angle the bullet sprite
+        laser.angle = math.degrees(angle)
+
+        # Taking into account the angle, calculate our change_x
+        # and change_y. Velocity is how fast the bullet travels.
+        laser.change_x = math.cos(angle) * Velocidad_disparo_skeleton
+        laser.change_y = math.sin(angle) * Velocidad_disparo_skeleton
+
+        self.rooms[self.current_room].enemigos_list.append(bullet)
+
 
 
 

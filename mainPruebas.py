@@ -25,6 +25,7 @@ class Room:
         self.wall_list = None
         self.background = None
         self.enemigos_list = None
+        self.balas_list = None
 
 
 
@@ -38,6 +39,7 @@ def setup_room_1():
     # Sprite lists
     room.wall_list = arcade.SpriteList()
     room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
 
 
 
@@ -61,6 +63,7 @@ def setup_room_2():
     # Sprite lists
     room.wall_list = arcade.SpriteList()
     room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
 
     skeleton = Enemigos.Skeleton()
     skeleton.center_x = 450
@@ -153,7 +156,48 @@ class SteamPunkGame(arcade.Window):
         self.physics_engine.update()
         self.jugador.update_animation()
         self.bullet_list.update()
-        
+
+        for enemy in self.rooms[self.current_room].enemigos_list:
+
+            # First, calculate the angle to the player. We could do this
+            # only when the bullet fires, but in this case we will rotate
+            # the enemy to face the player each frame, so we'll do this
+            # each frame.
+
+            # Position the start at the enemy's current location
+            start_x = enemy.center_x
+            start_y = enemy.center_y
+
+            # Get the destination location for the bullet
+            dest_x = self.player.center_x
+            dest_y = self.player.center_y
+
+            # Do math to calculate how to get the bullet to the destination.
+            # Calculation the angle in radians between the start points
+            # and end points. This is the angle the bullet will travel.
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+
+            # Set the enemy to face the player.
+            enemy.angle = math.degrees(angle) - 90
+
+            # Shoot every 60 frames change of shooting each frame
+            if self.frame_count % 60 == 0:
+                bullet = arcade.Sprite("sprites_master/LASER.png")
+                bullet.center_x = start_x
+                bullet.center_y = start_y
+
+                # Angle the bullet sprite
+                bullet.angle = math.degrees(angle)
+
+                # Taking into account the angle, calculate our change_x
+                # and change_y. Velocity is how fast the bullet travels.
+                bullet.change_x = math.cos(angle) * BULLET_SPEED
+                bullet.change_y = math.sin(angle) * BULLET_SPEED
+
+                room.balas_list.append(bullet)
+
 
 
         # Mirar en que habitación estamos y si necesitamos cambiar a otra
