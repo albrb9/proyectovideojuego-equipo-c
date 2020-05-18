@@ -12,7 +12,7 @@ import math
 
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
-
+Velocidad_Disparo_Enemigos = 8
 
 
 class Room:
@@ -194,7 +194,7 @@ class SteamPunkGame(arcade.Window):
                 if len(hit_list2) > 0:
                     bala.remove_from_sprite_lists()
             for enemigos in self.rooms[self.current_room].enemigos_list:
-                enemigos.disparar
+                enemigos.disparar(enemigos,Velocidad_Disparo_Enemigos,self.jugador)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
