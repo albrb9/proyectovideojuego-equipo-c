@@ -2,6 +2,8 @@ import arcade
 import Jugador
 import os
 import HUD
+import Enemigos
+import math
 
 # --- Constantes ---
 
@@ -10,6 +12,7 @@ import HUD
 
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
+
 
 
 class Room:
@@ -22,7 +25,8 @@ class Room:
         # You may want many lists. Lists for coins, monsters, etc.
         self.wall_list = None
         self.background = None
-        # Poner lista de enemigos aqui
+        self.enemigos_list = None
+        self.balas_list = None
 
 
 def setup_room_1():
@@ -33,6 +37,7 @@ def setup_room_1():
 
     # Sprite lists
     room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION1.tmx")
@@ -52,6 +57,14 @@ def setup_room_2():
 
     # Sprite lists
     room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+
+    #Creación de enemigos
+    skeleton = Enemigos.Skeleton()
+    skeleton.center_x = 450
+    skeleton.center_y = 800
+    room.enemigos_list.append(skeleton)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS3.tmx")
@@ -88,6 +101,7 @@ class SteamPunkGame(arcade.Window):
         # Pausar el juego
         self.pausado = False
 
+        self.frame_count = 0
     def setup(self):
         # Sprite lists
         self.player_list = arcade.SpriteList()
@@ -122,6 +136,8 @@ class SteamPunkGame(arcade.Window):
                 self.rooms[self.current_room].wall_list.draw()
                 self.player_list.draw()
                 self.bullet_list.draw()
+                self.rooms[self.current_room].enemigos_list.draw()
+                self.rooms[self.current_room].balas_list.draw()
                 HUD.dibujar_hud()
         else:
             if self.mirando_controles:
@@ -135,6 +151,7 @@ class SteamPunkGame(arcade.Window):
             self.physics_engine.update()
             self.jugador.update_animation()
             self.bullet_list.update()
+
 
             # Si estamos en modo fantasamal y nos quedamos sin tiempo
             # --> game over
@@ -172,7 +189,12 @@ class SteamPunkGame(arcade.Window):
                 # Si choca contra una pared, eliminar la bala
                 if len(hit_list) > 0:
                     bala.remove_from_sprite_lists()
-                # Poner colisiones con enemigos y balas aqui
+                # Mirar si choca contra un enemigo
+                hit_list2 = arcade.check_for_collision_with_list(bala, self.rooms[self.current_room].enemigos_list)
+                if len(hit_list2) > 0:
+                    bala.remove_from_sprite_lists()
+            for enemigos in self.rooms[self.current_room].enemigos_list:
+                enemigos.disparar
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
