@@ -14,7 +14,6 @@ SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
 
 
-
 class Room:
     """
     This class holds all the information about the
@@ -60,7 +59,7 @@ def setup_room_2():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
 
-    #Creación de enemigos
+    # Creación de enemigos
     skeleton = Enemigos.Skeleton()
     skeleton.center_x = 450
     skeleton.center_y = 800
@@ -93,6 +92,7 @@ class SteamPunkGame(arcade.Window):
         self.jugador = None
         self.physics_engine = None
         self.velocidad_jugador = 4
+        self.vida_jugador = 10
         # Atributos para el disparo del jugador
         self.velocidad_disparo = 10
         # Atributos para el manejo del comienzo del juego
@@ -102,6 +102,7 @@ class SteamPunkGame(arcade.Window):
         self.pausado = False
 
         self.frame_count = 0
+
     def setup(self):
         # Sprite lists
         self.player_list = arcade.SpriteList()
@@ -128,17 +129,20 @@ class SteamPunkGame(arcade.Window):
         if self.empezado:
             if self.pausado:
                 HUD.dibujar_hud_pausado()
+            elif self.jugador.muerto:
+                HUD.dibujar_hud_gameover()
             else:
                 # Draw the background texture
                 arcade.draw_lrwh_rectangle_textured(0, 0,
                                                     SCREEN_WIDTH, SCREEN_HEIGHT,
                                                     self.rooms[self.current_room].background)
+                HUD.dibujar_hud(self.vida_jugador)
                 self.rooms[self.current_room].wall_list.draw()
                 self.player_list.draw()
                 self.bullet_list.draw()
                 self.rooms[self.current_room].enemigos_list.draw()
                 self.rooms[self.current_room].balas_list.draw()
-                HUD.dibujar_hud()
+
         else:
             if self.mirando_controles:
                 HUD.dibujar_controles()
@@ -146,26 +150,33 @@ class SteamPunkGame(arcade.Window):
                 HUD.dibujar_pantalla_de_inicio()
 
     def on_update(self, delta_time: float = 1 / 60):
-        if not self.pausado:
+        if not self.pausado or self.jugador.muerto:
             # Actualizar todos los sprites
             self.physics_engine.update()
             self.jugador.update_animation()
             self.bullet_list.update()
 
-
-            # Si estamos en modo fantasamal y nos quedamos sin tiempo
-            # --> game over
             # Si estamos en modo fantasmal y matamos a todos los enemigos de la sala
             # --> reset de modo fantasmal (quitar buffs y demás)
-            # Si la vida del jugador llega a 0 y tenemos disponible el modo fantasmal
-            # --> activar estado fantasmal (10s de: invencibilidad, x2 velocidad)
-
-            if self.jugador.contador_de_muerte == 0:
-                self.velocidad_jugador = 4  # codigo temporal /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-
-
-
-
+            if len(self.rooms[self.current_room].enemigos_list) == 0 and self.jugador.estado_fantasmal:
+                self.vida_jugador = 10
+                self.jugador.desactivar_modo_fantasmal()
+                # Quitamos los buffs
+                self.velocidad_jugador /= 2
+            # Si estamos en modo fantasamal y nos quedamos sin tiempo
+            # --> game over
+            if self.jugador.contador_de_muerte <= 0 and self.jugador.estado_fantasmal:
+                # menor o igual que cero porque si ponemos igual a 0 puede que los updates no estén sincronizados
+                # y nunca entremos a este if
+                self.jugador.morir()
+                return
+            # Activar modo fantsamal (si podemos)
+            if self.vida_jugador == 0 and not self.jugador.estado_fantasmal:
+                # Pendiente de poner restricciones modo fant. /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+                self.jugador.activar_modo_fantasmal()
+                # Aplicamos buffs modo fant.
+                self.velocidad_jugador *= 2  # doble velocidad
+                # Aplicar invincibilidad??
 
             # Mirar en que habitación estamos y si necesitamos cambiar a otra
             if self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 0:  # 0-->1
@@ -199,12 +210,22 @@ class SteamPunkGame(arcade.Window):
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
         # Comienzo del juego
-        if key == arcade.key.ENTER:
-            self.empezado = True
-        elif key == arcade.key.C:
-            self.mirando_controles = True
-        elif key == arcade.key.BACKSPACE:
-            self.mirando_controles = False
+        if not self.empezado:
+            if key == arcade.key.ENTER:
+                self.empezado = True
+            elif key == arcade.key.C:
+                self.mirando_controles = True
+            elif key == arcade.key.BACKSPACE:
+                self.mirando_controles = False
+            return  # no necesitamos comprbar más controles
+        if self.jugador.muerto:
+            if key == arcade.key.R:
+                # Hacemos un reset de algunos atributos del juego
+                self.empezado = False
+                self.jugador.muerto = False
+                self.vida_jugador = 10
+                self.current_room = 0
+            return
         # Pausar el juego
         if key == arcade.key.P and not self.pausado:
             self.pausado = True
@@ -229,6 +250,9 @@ class SteamPunkGame(arcade.Window):
         # Activar modo fantasmal (PROVISIONAL, PARA PRUEBAS)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
         if key == arcade.key.E and not self.jugador.estado_fantasmal:
             self.velocidad_jugador = self.jugador.activar_modo_fantasmal()
+        # Hacerse daño a sí mismo (PROVISIONAL, PARA PRUEBAS)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        if key == arcade.key.Z:
+            self.vida_jugador -= 1
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
