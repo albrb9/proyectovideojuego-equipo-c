@@ -35,6 +35,7 @@ class Masked(arcade.Sprite):
 
         self.cur_texture = 0
 
+        self.vida = 2
 
         self.jugador = Jugador()  # OJO!
 
@@ -53,6 +54,9 @@ class Masked(arcade.Sprite):
         self.texture = self.textura_quieto[3]
 
         self.set_hit_box(self.texture.hit_box_points)
+
+    def recibir_damage(self, damage):
+        self.vida -= damage
 
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
@@ -89,6 +93,8 @@ class Skeleton(arcade.Sprite):
 
         self.change_x = 0
         self.change_y = 0
+
+        self.vida = 1
 
         self.textura_quieto = load_texture_4dir("sprites_master/ESQUELETO1.png", "sprites_master/ESQUELETO10.png",
                                                 "sprites_master/ESQUELETO7.png")
@@ -156,10 +162,8 @@ class Skeleton(arcade.Sprite):
         laser.change_x = math.cos(angle) * Velocidad_disparo_skeleton
         laser.change_y = math.sin(angle) * Velocidad_disparo_skeleton
 
-        
-
-
-
+    def recibir_damage(self, damage):
+        self.vida -= damage
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
@@ -197,6 +201,8 @@ class Gasmasked(arcade.Sprite):
 
         self.change_x = 0
         self.change_y = 0
+
+        self.vida = 3
 
         self.textura_quieto = load_texture_4dir("sprites_master/GASMASK1.png", "sprites_master/GASMASK10.png",
                                                 "sprites_master/GASMASK7.png")
@@ -237,6 +243,9 @@ class Gasmasked(arcade.Sprite):
             proyectil_gaseoso.center_x = gasmasked.center_x
             proyectil_gaseoso.change_y = -velocidad_disparo
         self.lista_laser.append(proyectil_gaseoso)
+
+    def recibir_damage(self, damage):
+        self.vida -= damage
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 

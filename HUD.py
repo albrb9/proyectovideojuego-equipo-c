@@ -2,8 +2,9 @@ import arcade
 import os
 
 
-def dibujar_hud(vida):
+def dibujar_hud(vida, carga_fantasmal):
     """Dibuja en pantalla el hud si se invoca en el método on_draw"""
+    # Vida
     if vida == 10:
         vida_x = 0
     elif vida == 9:
@@ -31,6 +32,10 @@ def dibujar_hud(vida):
                                         height=50, mirrored=True)
     arcade.draw_texture_rectangle(100, 865, 200, 50, barra_de_vida)  # centrox, centroy, ancho, alto, textura
 
+    # Carga Fantasmal
+    carga_fantasmal = str(carga_fantasmal)  # lo convertimos a String
+    arcade.draw_text(carga_fantasmal, 10, 800, arcade.color.WHITE, 24)
+
 
 def dibujar_pantalla_de_inicio():
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
@@ -54,5 +59,5 @@ def dibujar_hud_pausado():
 
 def dibujar_hud_gameover():
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
-    arcade.draw_text("GAME OVER", 350, 450, arcade.color.RED_DEVIL, 36, align="center", bold=True)
-    arcade.draw_text("Pulsa R para volver al menú principal", 250, 250, arcade.color.RED_DEVIL, 24, align="center")
+    arcade.draw_text("GAME OVER", 325, 450, arcade.color.RED_DEVIL, 36, align="center", bold=True)
+    arcade.draw_text("Pulsa R para salir", 335, 250, arcade.color.RED_DEVIL, 24, align="center")

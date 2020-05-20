@@ -35,7 +35,6 @@ class Jugador(arcade.Sprite):
         self.bloq_direccion = False
         self.disparando = False
         self.estado_fantasmal = False
-        self.invencible = False  # sin implementar en el main/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
         self.muerto = False
         # Usado para quitar la pistola a los 2s
         self.contador_remove_pistola = 0
@@ -119,11 +118,8 @@ class Jugador(arcade.Sprite):
         self.bloq_direccion = False
 
     def activar_modo_fantasmal(self):
-        if self.estado_fantasmal:
-            return False
         self.estado_fantasmal = True  # se utilizará para meter los sprites adecuados en update_animation
         self.contador_de_muerte = 600  # 10s
-        return True
 
     def desactivar_modo_fantasmal(self):
         self.estado_fantasmal = False
@@ -169,10 +165,11 @@ class Jugador(arcade.Sprite):
                 self.texture = self.textura_andando_pistola[self.cur_texture // UPDATES_PER_FRAME][
                     self.character_face_direction]
         else:
+            # Animación estado fantasmal
             if self.estado_fantasmal:
                 self.texture = self.textura_fanstasmal[self.character_face_direction]
                 return
-                # Animación estando quieto
+            # Animación estando quieto
             if self.change_x == 0 and self.change_y == 0:
                 self.texture = self.textura_quieto[self.character_face_direction]
                 return  # si entramos en este if no debemos mirar nada más de actualizar texturas

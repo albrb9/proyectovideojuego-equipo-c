@@ -4,6 +4,7 @@ import os
 import HUD
 import Enemigos
 import math
+import random
 
 # --- Constantes ---
 
@@ -13,6 +14,7 @@ import math
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 900
 Velocidad_Disparo_Enemigos = 8
+
 
 class Room:
     """
@@ -26,6 +28,7 @@ class Room:
         self.background = None
         self.enemigos_list = None
         self.balas_list = None
+        self.recargas_list = None
 
 
 def setup_room_1():
@@ -37,6 +40,7 @@ def setup_room_1():
     # Sprite lists
     room.wall_list = arcade.SpriteList()
     room.enemigos_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION1.tmx")
@@ -58,12 +62,28 @@ def setup_room_2():
     room.wall_list = arcade.SpriteList()
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
 
     # Creación de enemigos
     skeleton = Enemigos.Skeleton()
     skeleton.center_x = 450
     skeleton.center_y = 800
     room.enemigos_list.append(skeleton)
+
+    skeleton2 = Enemigos.Skeleton()
+    skeleton2.center_x = 450
+    skeleton2.center_y = 700
+    room.enemigos_list.append(skeleton2)
+
+    skeleton3 = Enemigos.Skeleton()
+    skeleton3.center_x = 452
+    skeleton3.center_y = 600
+    room.enemigos_list.append(skeleton3)
+
+    skeleton4 = Enemigos.Skeleton()
+    skeleton4.center_x = 650
+    skeleton4.center_y = 500
+    room.enemigos_list.append(skeleton4)
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS3.tmx")
@@ -93,6 +113,7 @@ class SteamPunkGame(arcade.Window):
         self.physics_engine = None
         self.velocidad_jugador = 4
         self.vida_jugador = 10
+        self.carga_fantasmal_jugador = 100
         # Atributos para el disparo del jugador
         self.velocidad_disparo = 10
         # Atributos para el manejo del comienzo del juego
@@ -136,12 +157,13 @@ class SteamPunkGame(arcade.Window):
                 arcade.draw_lrwh_rectangle_textured(0, 0,
                                                     SCREEN_WIDTH, SCREEN_HEIGHT,
                                                     self.rooms[self.current_room].background)
-                HUD.dibujar_hud(self.vida_jugador)
+                HUD.dibujar_hud(self.vida_jugador, self.carga_fantasmal_jugador)
                 self.rooms[self.current_room].wall_list.draw()
                 self.player_list.draw()
                 self.bullet_list.draw()
                 self.rooms[self.current_room].enemigos_list.draw()
                 self.rooms[self.current_room].balas_list.draw()
+                self.rooms[self.current_room].recargas_list.draw()
 
         else:
             if self.mirando_controles:
@@ -172,11 +194,14 @@ class SteamPunkGame(arcade.Window):
                 return
             # Activar modo fantsamal (si podemos)
             if self.vida_jugador == 0 and not self.jugador.estado_fantasmal:
-                # Pendiente de poner restricciones modo fant. /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-                self.jugador.activar_modo_fantasmal()
-                # Aplicamos buffs modo fant.
-                self.velocidad_jugador *= 2  # doble velocidad
-                # Aplicar invincibilidad??
+                if self.carga_fantasmal_jugador == 100:  # Aplicamos buffs modo fant.
+                    self.jugador.activar_modo_fantasmal()
+                    self.carga_fantasmal_jugador -= 100
+                    # Buffs
+                    self.velocidad_jugador *= 2  # doble velocidad
+                else:  # morimos
+                    self.jugador.morir()
+                    return
 
             # Mirar en que habitación estamos y si necesitamos cambiar a otra
             if self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 0:  # 0-->1
@@ -203,9 +228,35 @@ class SteamPunkGame(arcade.Window):
                 # Mirar si choca contra un enemigo
                 hit_list2 = arcade.check_for_collision_with_list(bala, self.rooms[self.current_room].enemigos_list)
                 if len(hit_list2) > 0:
+                    # Vamos a identificar el enemigo que ha sido golpeado:
+                    for enemigo in self.rooms[self.current_room].enemigos_list:
+                        if enemigo in hit_list2:
+                            enemigo.recibir_damage(1)  # Pendiente de implementar poder hacer más daño?
+                            # Muerte de enemigos
+                            if enemigo.vida <= 0:
+                                # (por si les hacemos más daño de la vida que tienen y se queda con vida negativa)
+                                # Dropeos
+                                n = random.randint(0, 10)
+                                if n == 10 or n == 9:  # 20 % de drop
+                                    # Dropeo exitoso:
+                                    recarga = arcade.Sprite("sprites_master" + os.path.sep + "DISPOSITIVOFANTASMA.png")
+                                    recarga.center_x = enemigo.center_x
+                                    recarga.center_y = enemigo.center_y
+                                    self.rooms[self.current_room].recargas_list.append(recarga)
+
+                                # Eliminamos al enemigo sin vida
+                                enemigo.remove_from_sprite_lists()
+
                     bala.remove_from_sprite_lists()
+
             for enemigos in self.rooms[self.current_room].enemigos_list:
-                enemigos.disparar(enemigos,Velocidad_Disparo_Enemigos,self.jugador)
+                enemigos.disparar(enemigos, Velocidad_Disparo_Enemigos, self.jugador)
+
+            # Mirar si hemos cogido alguna recarga
+            hit_list3 = arcade.check_for_collision_with_list(self.jugador, self.rooms[self.current_room].recargas_list)
+            for recarga in hit_list3:
+                recarga.remove_from_sprite_lists()
+                self.carga_fantasmal_jugador += 10
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -220,12 +271,7 @@ class SteamPunkGame(arcade.Window):
             return  # no necesitamos comprbar más controles
         if self.jugador.muerto:
             if key == arcade.key.R:
-                # Hacemos un reset de algunos atributos del juego
-                self.empezado = False
-                self.jugador.muerto = False
-                self.vida_jugador = 10
-                self.current_room = 0
-            return
+                exit()  # Mirar como reiniciar /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
         # Pausar el juego
         if key == arcade.key.P and not self.pausado:
             self.pausado = True
@@ -247,12 +293,9 @@ class SteamPunkGame(arcade.Window):
         # Bloquear direccion a la que mira el personaje (hay que mantener)
         if key == arcade.key.SPACE:
             self.jugador.bloquear_direccion()
-        # Activar modo fantasmal (PROVISIONAL, PARA PRUEBAS)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-        if key == arcade.key.E and not self.jugador.estado_fantasmal:
-            self.velocidad_jugador = self.jugador.activar_modo_fantasmal()
         # Hacerse daño a sí mismo (PROVISIONAL, PARA PRUEBAS)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
         if key == arcade.key.Z:
-            self.vida_jugador -= 1
+            self.vida_jugador -= 5
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
