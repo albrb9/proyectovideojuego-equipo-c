@@ -60,4 +60,4 @@ def dibujar_hud_pausado():
 def dibujar_hud_gameover():
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
     arcade.draw_text("GAME OVER", 325, 450, arcade.color.RED_DEVIL, 36, align="center", bold=True)
-    arcade.draw_text("Pulsa R para salir", 335, 250, arcade.color.RED_DEVIL, 24, align="center")
+    arcade.draw_text("Pulsa R para reiniciar", 335, 250, arcade.color.RED_DEVIL, 24, align="center")

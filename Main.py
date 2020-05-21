@@ -270,8 +270,14 @@ class SteamPunkGame(arcade.Window):
                 self.mirando_controles = False
             return  # no necesitamos comprbar más controles
         if self.jugador.muerto:
-            if key == arcade.key.R:
-                exit()  # Mirar como reiniciar /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+            # Reiniciar el juego desde el principio:
+            if key == arcade.key.R:  # Potencialmente puede dar problemas más adelante!!! REVISAR /\/\/\/\/\/\/\/\/\/\
+                self.setup()
+                self.jugador.muerto = False
+                self.jugador.estado_fantasmal = False  # por si morimos en modo fontasmal
+                self.vida_jugador = 10
+                self.carga_fantasmal_jugador = 100
+                self.current_room = 0
         # Pausar el juego
         if key == arcade.key.P and not self.pausado:
             self.pausado = True
