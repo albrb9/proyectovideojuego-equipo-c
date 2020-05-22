@@ -23,7 +23,7 @@ class Room:
     """
 
     def __init__(self):
-        # You may want many lists. Lists for coins, monsters, etc.
+        # Todas las listas de las habitaciones
         self.wall_list = None
         self.background = None
         self.enemigos_list = None
@@ -31,10 +31,8 @@ class Room:
         self.recargas_list = None
 
 
-def setup_room_1():
-    """
-    Create and return room 1.
-    """
+def setup_room_p1():
+    """Crea y devuelve la habitacion prision 1"""
     room = Room()
 
     # Sprite lists
@@ -43,19 +41,17 @@ def setup_room_1():
     room.recargas_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION1.tmx")
-    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")
-    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION1.png")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION6.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y OBJETOS")
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION6.png")
 
     # Definir muros
     room.wall_list = obstaculos
     return room
 
 
-def setup_room_2():
-    """
-    Create and return room 2.
-    """
+def setup_room_p2():
+    """Crea y devuelve la habitacion prision 2"""
     room = Room()
 
     # Sprite lists
@@ -64,31 +60,432 @@ def setup_room_2():
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
 
-    # Creación de enemigos
-    skeleton = Enemigos.Skeleton()
-    skeleton.center_x = 450
-    skeleton.center_y = 800
-    room.enemigos_list.append(skeleton)
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION2.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION2.png")
 
-    skeleton2 = Enemigos.Skeleton()
-    skeleton2.center_x = 450
-    skeleton2.center_y = 700
-    room.enemigos_list.append(skeleton2)
+    # Definir muros
+    room.wall_list = obstaculos
 
-    skeleton3 = Enemigos.Skeleton()
-    skeleton3.center_x = 452
-    skeleton3.center_y = 600
-    room.enemigos_list.append(skeleton3)
+    return room
 
-    skeleton4 = Enemigos.Skeleton()
-    skeleton4.center_x = 650
-    skeleton4.center_y = 500
-    room.enemigos_list.append(skeleton4)
+
+def setup_room_p3():
+    """Crea y devuelve la habitacion prision 3"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS3.tmx")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION9.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
-    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS3.png")
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION9.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_p4():
+    """Crea y devuelve la habitacion prision 4"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION4.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION4.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_p5():
+    """Crea y devuelve la habitacion prision 5"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION8.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION8.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_p6():
+    """Crea y devuelve la habitacion prision 6"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION7.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION7.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_p7():
+    """Crea y devuelve la habitacion prision 7
+    Cambio de piso a las ruinas"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION1.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION1.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r1():
+    """Crea y devuelve la habitacion ruinas 1"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS11.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS11.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r2():
+    """Crea y devuelve la habitacion ruinas 2"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS1.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS1.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r3():
+    """Crea y devuelve la habitacion ruinas 3"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS9.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS9.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r4():
+    """Crea y devuelve la habitacion ruinas 4"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS15.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS15.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r5():
+    """Crea y devuelve la habitacion ruinas 5"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS1.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS1.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r6():
+    """Crea y devuelve la habitacion ruinas 6"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS12.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS12.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r7():
+    """Crea y devuelve la habitacion ruinas 7"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS2.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS2.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r8():
+    """Crea y devuelve la habitacion ruinas 8
+    Cambio de piso al laboratorio"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS13.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS13.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r9():
+    """Crea y devuelve la habitacion ruinas 9"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS14.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS14.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r10():
+    """Crea y devuelve la habitacion ruinas 10"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS4.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS4.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r11():
+    """Crea y devuelve la habitacion ruinas 11"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS2.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS2.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r12():
+    """Crea y devuelve la habitacion ruinas 12"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS9.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS9.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r13():
+    """Crea y devuelve la habitacion ruinas 13"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS5.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS5.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r14():
+    """Crea y devuelve la habitacion ruinas 14"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS14.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS14.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_r15():
+    """Crea y devuelve la habitacion ruinas 15"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS4.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y ROCAS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS4.png")
 
     # Definir muros
     room.wall_list = obstaculos
@@ -136,11 +533,53 @@ class SteamPunkGame(arcade.Window):
 
         # Rooms
         self.rooms = []  # lista de todas las habitaciones
-        room = setup_room_1()  # convendria hacer un for cuando se pongan mas
+        # Prision:
+        room = setup_room_p1()
+        self.rooms.append(room)
+        room = setup_room_p2()
+        self.rooms.append(room)
+        room = setup_room_p3()
+        self.rooms.append(room)
+        room = setup_room_p4()
+        self.rooms.append(room)
+        room = setup_room_p5()
+        self.rooms.append(room)
+        room = setup_room_p6()
+        self.rooms.append(room)
+        room = setup_room_p7()
+        self.rooms.append(room)
+        # Ruinas:
+        room = setup_room_r1()
+        self.rooms.append(room)
+        room = setup_room_r2()
+        self.rooms.append(room)
+        room = setup_room_r3()
+        self.rooms.append(room)
+        room = setup_room_r4()
+        self.rooms.append(room)
+        room = setup_room_r5()
+        self.rooms.append(room)
+        room = setup_room_r6()
+        self.rooms.append(room)
+        room = setup_room_r7()
+        self.rooms.append(room)
+        room = setup_room_r8()
+        self.rooms.append(room)
+        room = setup_room_r9()
+        self.rooms.append(room)
+        room = setup_room_r10()
+        self.rooms.append(room)
+        room = setup_room_r11()
+        self.rooms.append(room)
+        room = setup_room_r12()
+        self.rooms.append(room)
+        room = setup_room_r13()
+        self.rooms.append(room)
+        room = setup_room_r14()
+        self.rooms.append(room)
+        room = setup_room_r15()
         self.rooms.append(room)
 
-        room = setup_room_2()
-        self.rooms.append(room)
         self.current_room = 0  # habitacion inicial
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
@@ -204,18 +643,259 @@ class SteamPunkGame(arcade.Window):
                     return
 
             # Mirar en que habitación estamos y si necesitamos cambiar a otra
-            if self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 0:  # 0-->1
+            # Prision: (0-6)
+
+            if self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 0:  # 0-->1
                 self.current_room = 1
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
-                self.jugador.center_y = 110
+                self.jugador.center_x = 100
                 self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
-            elif self.jugador.center_y < 110 and self.current_room == 1:  # 1-->0
+            elif self.jugador.center_x < 90 and self.current_room == 1:  # 1-->0
                 self.current_room = 0
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
-                self.bullet_list = arcade.SpriteList()  # Resetear la lista de balas
+                self.bullet_list = arcade.SpriteList()
+                self.jugador.center_x = SCREEN_WIDTH - 110
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 1:  # 1-->2
+                self.current_room = 2
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x < 90 and self.current_room == 2:  # 2-->1
+                self.current_room = 1
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 2:  # 2-->3
+                self.current_room = 3
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 3:  # 3-->2
+                self.current_room = 2
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 2:  # 2-->4
+                self.current_room = 4
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 4:  # 4-->2
+                self.current_room = 2
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 4:  # 4-->5
+                self.current_room = 5
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x < 90 and self.current_room == 5:  # 5-->4
+                self.current_room = 4
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 4:  # 4-->6
+                self.current_room = 6
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 6:  # 6-->4
+                self.current_room = 4
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 6:  # 6-->Ruinas 7(r1)
+                self.current_room = 7
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 200  # emepzamos por la parte de abajo la primera sala de ruinas
+                self.bullet_list = arcade.SpriteList()
+
+            # Ruinas: (7-21)
+            # Ruta principal:
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 7:  # 7(r1)-->8(r2)
+                self.current_room = 8
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 8:  # 8(r2)-->7(r1)
+                self.current_room = 7
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 8:  # 8(r2)-->9(r3)
+                self.current_room = 9
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 9:  # 9(r3)-->8(r2)
+                self.current_room = 8
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 9:  # 9(r3)-->10(r4)
+                self.current_room = 10
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x < 90 and self.current_room == 10:  # 10(r4)-->9(r3)
+                self.current_room = 9
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 10:  # 10(r4)-->11(r5)
+                self.current_room = 11
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 11:  # 11(r5)-->10(r4)
+                self.current_room = 10
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 11:  # 11(r5)-->12(r6)
+                self.current_room = 12
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 12:  # 12(r6)-->11(r5)
+                self.current_room = 11
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 12:  # 12(r6)-->13(r7)
+                self.current_room = 13
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x < 90 and self.current_room == 13:  # 13(r7)-->12(r6)
+                self.current_room = 12
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 13:  # 13(r7)-->14(r8)
+                self.current_room = 14
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x < 90 and self.current_room == 14:  # 14(r8)-->13(r7)
+                self.current_room = 13
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            # Desvío R3
+            elif self.jugador.center_x < 90 and self.current_room == 9:  # 9(r3)-->15(r9)
+                self.current_room = 15
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 15:  # 15(r9)-->9(r3)
+                self.current_room = 9
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 15:  # 15(r9)-->16(r10)
+                self.current_room = 16
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 16:  # 16(r10)-->15(r9)
+                self.current_room = 15
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            # Desvío R1
+            elif self.jugador.center_x < 90 and self.current_room == 7:  # 7(r1)-->17(r11)
+                self.current_room = 17
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 17:  # 17(r11)-->7(r1)
+                self.current_room = 7
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x < 90 and self.current_room == 17:  # 17(r11)-->18(r12)
+                self.current_room = 18
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 18:  # 18(r12)-->17(r11)
+                self.current_room = 17
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 18:  # 18(r12)-->19(r13)
+                self.current_room = 19
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 19:  # 19(r13)-->18(r12)
+                self.current_room = 18
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x < 90 and self.current_room == 18:  # 18(r12)-->20(r14)
+                self.current_room = 20
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = SCREEN_WIDTH - 110
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_x > SCREEN_WIDTH - 90 and self.current_room == 20:  # 20(r14)-->18(r12)
+                self.current_room = 18
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_x = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 20:  # 20(r14)-->21(r15)
+                self.current_room = 21
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 100
+                self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 21:  # 21(r15)-->20(r14)
+                self.current_room = 20
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = SCREEN_HEIGHT - 110
+                self.bullet_list = arcade.SpriteList()
 
             # Actualizar balas jugador
             # Loop through each bullet
@@ -277,7 +957,6 @@ class SteamPunkGame(arcade.Window):
                 self.jugador.estado_fantasmal = False  # por si morimos en modo fontasmal
                 self.vida_jugador = 10
                 self.carga_fantasmal_jugador = 100
-                self.current_room = 0
         # Pausar el juego
         if key == arcade.key.P and not self.pausado:
             self.pausado = True
