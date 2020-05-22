@@ -45,6 +45,11 @@ def setup_room_p1():
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y OBJETOS")
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION6.png")
 
+    esqueleto1 = Enemigos.Skeleton()
+    esqueleto1.center_y = 300
+    esqueleto1.center_x = 700
+    room.enemigos_list.append(esqueleto1)
+
     # Definir muros
     room.wall_list = obstaculos
     return room
@@ -597,6 +602,8 @@ class SteamPunkGame(arcade.Window):
                                                     SCREEN_WIDTH, SCREEN_HEIGHT,
                                                     self.rooms[self.current_room].background)
                 HUD.dibujar_hud(self.vida_jugador, self.carga_fantasmal_jugador)
+                if self.jugador.estado_fantasmal:
+                    HUD.dibujar_contador_de_muerte(self.jugador.contador_de_muerte)
                 self.rooms[self.current_room].wall_list.draw()
                 self.player_list.draw()
                 self.bullet_list.draw()

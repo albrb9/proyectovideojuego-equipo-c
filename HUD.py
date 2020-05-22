@@ -37,6 +37,11 @@ def dibujar_hud(vida, carga_fantasmal):
     arcade.draw_text(carga_fantasmal, 10, 800, arcade.color.WHITE, 24)
 
 
+def dibujar_contador_de_muerte(contador):
+    arcade.draw_text(str(int(contador / 60)), 445, 825, arcade.color.RED_ORANGE, 40, bold=True, align="center")
+    arcade.draw_text("¡Acaba con todos los enemigos de la sala!", 250, 800, arcade.color.RED_ORANGE, 20, bold=True, align="center")
+
+
 def dibujar_pantalla_de_inicio():
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
     arcade.draw_text("Pulsa enter para comenzar", 0, 450, arcade.color.WOOD_BROWN, 40, 900, "center", bold=True)
