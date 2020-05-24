@@ -26,18 +26,16 @@ def load_texture_4dir(filename_lados, filename_up, filename_down):
 
 
 class Jugador(arcade.Sprite):
-
     def __init__(self):
         """Constructor del sprite del jugador"""
         super().__init__()
-
         # Dirección a la que mira por defecto
         self.character_face_direction = RIGHT_FACING  # tiene valores del 0 al 3
         # Booleanos para saber el estado del personaje
         self.bloq_direccion = False
         self.disparando = False
         self.estado_fantasmal = False
-        self.invencible = False     # sin implementar en el main/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        self.muerto = False
         # Usado para quitar la pistola a los 2s
         self.contador_remove_pistola = 0
         # Usado para restringir el tiempo en modo fantasmal a los 10s
@@ -62,8 +60,6 @@ class Jugador(arcade.Sprite):
                                                               i - 3),
                                                           "sprites_master" + os.path.sep + "PERSONAJE{}.png".format(
                                                               i - 6)))
-        # Sonidos
-        self.sonido_disparar = arcade.load_sound("Sonidos" + os.path.sep + "Disparo prota.wav")
         self.textura_andando_pistola = []
         for i in (17, 18):
             # Cargamos texturas 21 y 22 (derecha moviendo los pies)
@@ -75,6 +71,15 @@ class Jugador(arcade.Sprite):
                                       i + 6),
                                   "sprites_master" + os.path.sep + "PERSONAJE{}.png".format(
                                       i)))
+        self.textura_fanstasmal = load_texture_4dir("sprites_master" + os.path.sep + "GHOST2.png",
+                                                    "sprites_master" + os.path.sep + "GHOST4.png",
+                                                    "sprites_master" + os.path.sep + "GHOST3.png")
+        self.textura_fanstasmal_pistola = load_texture_4dir("sprites_master" + os.path.sep + "GHOST6.png",
+                                                            "sprites_master" + os.path.sep + "GHOST8.png",
+                                                            "sprites_master" + os.path.sep + "GHOST7.png")
+
+        # Sonidos
+        self.sonido_disparar = arcade.load_sound("Sonidos" + os.path.sep + "Disparo prota.wav")
 
     def disparar(self, jugador, velocidad_disparo):
         """ArcadeSprite, int ---> ArcadeSprite
@@ -115,8 +120,12 @@ class Jugador(arcade.Sprite):
     def activar_modo_fantasmal(self):
         self.estado_fantasmal = True  # se utilizará para meter los sprites adecuados en update_animation
         self.contador_de_muerte = 600  # 10s
-        self.invencible = True
-        return 8  # nueva velocidad del jugador
+
+    def desactivar_modo_fantasmal(self):
+        self.estado_fantasmal = False
+
+    def morir(self):
+        self.muerto = True
 
     def update_animation(self, delta_time: float = 1 / 60):
         """Utilizado para actualizar la animación del jugador"""
@@ -133,9 +142,6 @@ class Jugador(arcade.Sprite):
 
         if self.estado_fantasmal:
             self.contador_de_muerte -= 1
-            if self.contador_de_muerte == 0:
-                self.estado_fantasmal = False
-                # el resto de cosas que pasan cuando se acaba este modo se manejan en el update del main
 
         # Si no hemos disparado en 2s quitar la pistola
         if self.disparando:
@@ -143,8 +149,12 @@ class Jugador(arcade.Sprite):
             if self.contador_remove_pistola == 120:  # LLevamos 2s sin disparar
                 self.disparando = False
                 self.contador_remove_pistola = 0
+            # Animacion modo fantasmal con pistola
+            if self.estado_fantasmal:
+                self.texture = self.textura_fanstasmal_pistola[self.character_face_direction]
+                return
             # Animación estando quieto con pistola
-            if self.change_x == 0 and self.change_y == 0:
+            elif self.change_x == 0 and self.change_y == 0:
                 self.texture = self.textura_quieto_pistola[self.character_face_direction]
                 return  # si entramos en este if no debemos mirar nada más de actualizar texturas
             # Animación moviendose con pistola
@@ -154,7 +164,11 @@ class Jugador(arcade.Sprite):
                     self.cur_texture = 0
                 self.texture = self.textura_andando_pistola[self.cur_texture // UPDATES_PER_FRAME][
                     self.character_face_direction]
-        elif not self.disparando:
+        else:
+            # Animación estado fantasmal
+            if self.estado_fantasmal:
+                self.texture = self.textura_fanstasmal[self.character_face_direction]
+                return
             # Animación estando quieto
             if self.change_x == 0 and self.change_y == 0:
                 self.texture = self.textura_quieto[self.character_face_direction]

@@ -1,6 +1,9 @@
 import arcade
 import os
 import math
+import Main
+import Jugador
+
 
 RIGHT_FACING = 0
 LEFT_FACING = 1
@@ -32,6 +35,10 @@ class Masked(arcade.Sprite):
 
         self.cur_texture = 0
 
+        self.vida = 2
+
+        self.jugador = Jugador()  # OJO!
+
         self.change_x = 0
         self.change_y = 0
 
@@ -47,6 +54,9 @@ class Masked(arcade.Sprite):
         self.texture = self.textura_quieto[3]
 
         self.set_hit_box(self.texture.hit_box_points)
+
+    def recibir_damage(self, damage):
+        self.vida -= damage
 
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
@@ -84,6 +94,8 @@ class Skeleton(arcade.Sprite):
         self.change_x = 0
         self.change_y = 0
 
+        self.vida = 1
+
         self.textura_quieto = load_texture_4dir("sprites_master/ESQUELETO1.png", "sprites_master/ESQUELETO10.png",
                                                 "sprites_master/ESQUELETO7.png")
 
@@ -101,31 +113,31 @@ class Skeleton(arcade.Sprite):
 
         self.lista_laser = arcade.SpriteList()
 
-    def disparar(self, skeleton, velocidad_disparo_skeleton):
+    def disparar(self, skeleton, Velocidad_disparo_skeleton, jugador):
         laser = arcade.Sprite("sprites_master/LASER.png")
         self.sonido_disparar.play()
         if self.character_face_direction == RIGHT_FACING:
             laser.left = skeleton.right
             laser.center_y = skeleton.center_y
-            laser.change_x = velocidad_disparo
+            laser.change_x = Velocidad_disparo_skeleton
         elif self.character_face_direction == LEFT_FACING:
             laser.right = skeleton.left
             laser.center_y = skeleton.center_y
-            laser.change_x = -velocidad_disparo
+            laser.change_x = -Velocidad_disparo_skeleton
         elif self.character_face_direction == UP_FACING:
             laser.bottom = skeleton.top
             laser.center_x = skeleton.center_x
-            laser.change_y = velocidad_disparo
+            laser.change_y = Velocidad_disparo_skeleton
         elif self.character_face_direction == DOWN_FACING:
             laser.top = skeleton.bottom
             laser.center_x = skeleton.center_x
-            laser.change_y = -velocidad_disparo
+            laser.change_y = -Velocidad_disparo_skeleton
 
-        start_x = Skeleton.center_x
-        start_y = Skeleton.center_y
+        start_x = skeleton.center_x
+        start_y = skeleton.center_y
         # Get the destination location for the bullet
-        dest_x = self.jugador.center_x
-        dest_y = self.jugador.center_y
+        dest_x = jugador.center_x
+        dest_y = jugador.center_y
 
         # Do math to calculate how to get the bullet to the destination.
         # Calculation the angle in radians between the start points
@@ -135,10 +147,10 @@ class Skeleton(arcade.Sprite):
         angle = math.atan2(y_diff, x_diff)
 
         # Set the enemy to face the player.
-        enemy.angle = math.degrees(angle) - 90
+        skeleton.angle = math.degrees(angle) - 90
 
         # Shoot every 60 frames change of shooting each frame
-        bullet = arcade.Sprite("sprites_master/LASER.png")
+        laser = arcade.Sprite("sprites_master/LASER.png")
         laser.center_x = start_x
         laser.center_y = start_y
 
@@ -150,10 +162,8 @@ class Skeleton(arcade.Sprite):
         laser.change_x = math.cos(angle) * Velocidad_disparo_skeleton
         laser.change_y = math.sin(angle) * Velocidad_disparo_skeleton
 
-        self.rooms[self.current_room].enemigos_list.append(bullet)
-
-
-
+    def recibir_damage(self, damage):
+        self.vida -= damage
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
@@ -191,6 +201,8 @@ class Gasmasked(arcade.Sprite):
 
         self.change_x = 0
         self.change_y = 0
+
+        self.vida = 3
 
         self.textura_quieto = load_texture_4dir("sprites_master/GASMASK1.png", "sprites_master/GASMASK10.png",
                                                 "sprites_master/GASMASK7.png")
@@ -231,6 +243,9 @@ class Gasmasked(arcade.Sprite):
             proyectil_gaseoso.center_x = gasmasked.center_x
             proyectil_gaseoso.change_y = -velocidad_disparo
         self.lista_laser.append(proyectil_gaseoso)
+
+    def recibir_damage(self, damage):
+        self.vida -= damage
 
     def actualizar_animacion(self, delta_time: float = 1 / 60):
 
