@@ -3,7 +3,6 @@ import Jugador
 import os
 import HUD
 import Enemigos
-import math
 import random
 
 # --- Constantes ---
@@ -499,7 +498,7 @@ def setup_room_r15():
 
 
 def setup_room_l1():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 1"""
     room = Room()
 
     # Sprite lists
@@ -520,7 +519,7 @@ def setup_room_l1():
 
 
 def setup_room_l2():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 2"""
     room = Room()
 
     # Sprite lists
@@ -541,7 +540,7 @@ def setup_room_l2():
 
 
 def setup_room_l3():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 3"""
     room = Room()
 
     # Sprite lists
@@ -551,7 +550,7 @@ def setup_room_l3():
     room.recargas_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6.tmx")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB6.png")
 
@@ -562,7 +561,7 @@ def setup_room_l3():
 
 
 def setup_room_l4():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 4"""
     room = Room()
 
     # Sprite lists
@@ -583,7 +582,7 @@ def setup_room_l4():
 
 
 def setup_room_l5():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 5"""
     room = Room()
 
     # Sprite lists
@@ -593,7 +592,7 @@ def setup_room_l5():
     room.recargas_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5.tmx")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB5.png")
 
@@ -604,7 +603,7 @@ def setup_room_l5():
 
 
 def setup_room_l6():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 6"""
     room = Room()
 
     # Sprite lists
@@ -625,7 +624,7 @@ def setup_room_l6():
 
 
 def setup_room_l7():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 7"""
     room = Room()
 
     # Sprite lists
@@ -646,7 +645,7 @@ def setup_room_l7():
 
 
 def setup_room_l8():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 8"""
     room = Room()
 
     # Sprite lists
@@ -667,7 +666,7 @@ def setup_room_l8():
 
 
 def setup_room_l9():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 9"""
     room = Room()
 
     # Sprite lists
@@ -677,9 +676,9 @@ def setup_room_l9():
     room.recargas_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB9M.tmx")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
-    room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB9.png")
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB5.png")
 
     # Definir muros
     room.wall_list = obstaculos
@@ -688,7 +687,7 @@ def setup_room_l9():
 
 
 def setup_room_l10():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 10"""
     room = Room()
 
     # Sprite lists
@@ -709,7 +708,7 @@ def setup_room_l10():
 
 
 def setup_room_l11():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 11"""
     room = Room()
 
     # Sprite lists
@@ -730,7 +729,7 @@ def setup_room_l11():
 
 
 def setup_room_l12():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 12"""
     room = Room()
 
     # Sprite lists
@@ -751,7 +750,7 @@ def setup_room_l12():
 
 
 def setup_room_l13():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 13"""
     room = Room()
 
     # Sprite lists
@@ -761,9 +760,9 @@ def setup_room_l13():
     room.recargas_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB5.tmx")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB9.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
-    room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB5.png")
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB9.png")
 
     # Definir muros
     room.wall_list = obstaculos
@@ -772,7 +771,7 @@ def setup_room_l13():
 
 
 def setup_room_l14():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 14"""
     room = Room()
 
     # Sprite lists
@@ -793,7 +792,7 @@ def setup_room_l14():
 
 
 def setup_room_l15():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 15"""
     room = Room()
 
     # Sprite lists
@@ -814,7 +813,7 @@ def setup_room_l15():
 
 
 def setup_room_l16():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 16"""
     room = Room()
 
     # Sprite lists
@@ -835,7 +834,7 @@ def setup_room_l16():
 
 
 def setup_room_l17():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 17"""
     room = Room()
 
     # Sprite lists
@@ -856,7 +855,7 @@ def setup_room_l17():
 
 
 def setup_room_l18():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 18"""
     room = Room()
 
     # Sprite lists
@@ -877,7 +876,7 @@ def setup_room_l18():
 
 
 def setup_room_l19():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 19"""
     room = Room()
 
     # Sprite lists
@@ -898,7 +897,7 @@ def setup_room_l19():
 
 
 def setup_room_l20():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 20"""
     room = Room()
 
     # Sprite lists
@@ -919,7 +918,7 @@ def setup_room_l20():
 
 
 def setup_room_l21():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 21"""
     room = Room()
 
     # Sprite lists
@@ -940,7 +939,7 @@ def setup_room_l21():
 
 
 def setup_room_l22():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 22"""
     room = Room()
 
     # Sprite lists
@@ -961,7 +960,7 @@ def setup_room_l22():
 
 
 def setup_room_l23():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 23"""
     room = Room()
 
     # Sprite lists
@@ -982,7 +981,7 @@ def setup_room_l23():
 
 
 def setup_room_l24():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 24"""
     room = Room()
 
     # Sprite lists
@@ -1003,7 +1002,7 @@ def setup_room_l24():
 
 
 def setup_room_l25():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 25"""
     room = Room()
 
     # Sprite lists
@@ -1024,7 +1023,7 @@ def setup_room_l25():
 
 
 def setup_room_l26():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 26"""
     room = Room()
 
     # Sprite lists
@@ -1045,7 +1044,7 @@ def setup_room_l26():
 
 
 def setup_room_l27():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 27"""
     room = Room()
 
     # Sprite lists
@@ -1066,7 +1065,7 @@ def setup_room_l27():
 
 
 def setup_room_l28():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 28"""
     room = Room()
 
     # Sprite lists
@@ -1087,7 +1086,7 @@ def setup_room_l28():
 
 
 def setup_room_l29():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 29"""
     room = Room()
 
     # Sprite lists
@@ -1108,7 +1107,7 @@ def setup_room_l29():
 
 
 def setup_room_l30():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 30"""
     room = Room()
 
     # Sprite lists
@@ -1129,7 +1128,7 @@ def setup_room_l30():
 
 
 def setup_room_l31():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 31"""
     room = Room()
 
     # Sprite lists
@@ -1150,7 +1149,7 @@ def setup_room_l31():
 
 
 def setup_room_l32():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 32"""
     room = Room()
 
     # Sprite lists
@@ -1160,9 +1159,9 @@ def setup_room_l32():
     room.recargas_list = arcade.SpriteList()
 
     # Tile map
-    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB6M.tmx")
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB7M.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
-    room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB6.png")
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB7.png")
 
     # Definir muros
     room.wall_list = obstaculos
@@ -1171,7 +1170,7 @@ def setup_room_l32():
 
 
 def setup_room_l33():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 33"""
     room = Room()
 
     # Sprite lists
@@ -1192,7 +1191,7 @@ def setup_room_l33():
 
 
 def setup_room_l34():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 34"""
     room = Room()
 
     # Sprite lists
@@ -1213,7 +1212,7 @@ def setup_room_l34():
 
 
 def setup_room_l35():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 35"""
     room = Room()
 
     # Sprite lists
@@ -1234,7 +1233,7 @@ def setup_room_l35():
 
 
 def setup_room_l36():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 36"""
     room = Room()
 
     # Sprite lists
@@ -1255,7 +1254,7 @@ def setup_room_l36():
 
 
 def setup_room_l37():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """"Crea y devuelve la habitacion laboratorio 37"""
     room = Room()
 
     # Sprite lists
@@ -1276,7 +1275,7 @@ def setup_room_l37():
 
 
 def setup_room_l38():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 38"""
     room = Room()
 
     # Sprite lists
@@ -1297,7 +1296,7 @@ def setup_room_l38():
 
 
 def setup_room_l39():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 39"""
     room = Room()
 
     # Sprite lists
@@ -1318,7 +1317,7 @@ def setup_room_l39():
 
 
 def setup_room_l40():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 40"""
     room = Room()
 
     # Sprite lists
@@ -1339,7 +1338,7 @@ def setup_room_l40():
 
 
 def setup_room_l41():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 41"""
     room = Room()
 
     # Sprite lists
@@ -1360,7 +1359,7 @@ def setup_room_l41():
 
 
 def setup_room_l42():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 42"""
     room = Room()
 
     # Sprite lists
@@ -1381,7 +1380,7 @@ def setup_room_l42():
 
 
 def setup_room_l43():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 43"""
     room = Room()
 
     # Sprite lists
@@ -1402,7 +1401,7 @@ def setup_room_l43():
 
 
 def setup_room_l44():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 44"""
     room = Room()
 
     # Sprite lists
@@ -1423,7 +1422,7 @@ def setup_room_l44():
 
 
 def setup_room_l45():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 45"""
     room = Room()
 
     # Sprite lists
@@ -1444,7 +1443,7 @@ def setup_room_l45():
 
 
 def setup_room_l46():
-    """Crea y devuelve la habitacion ruinas 15"""
+    """Crea y devuelve la habitacion laboratorio 46"""
     room = Room()
 
     # Sprite lists
@@ -1457,6 +1456,27 @@ def setup_room_l46():
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB4.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB4.png")
+
+    # Definir muros
+    room.wall_list = obstaculos
+
+    return room
+
+
+def setup_room_lboss():
+    """Crea y devuelve la habitacion laboratorio donde está el boss"""
+    room = Room()
+
+    # Sprite lists
+    room.wall_list = arcade.SpriteList()
+    room.enemigos_list = arcade.SpriteList()
+    room.balas_list = arcade.SpriteList()
+    room.recargas_list = arcade.SpriteList()
+
+    # Tile map
+    mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LABSALAFINAL.tmx")
+    obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
+    room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB1.png")
 
     # Definir muros
     room.wall_list = obstaculos
@@ -1505,7 +1525,7 @@ class SteamPunkGame(arcade.Window):
         # Rooms
         self.rooms = []  # lista de todas las habitaciones
 
-        # Prision:
+        # Prision: (0-6)
         room = setup_room_p1()
         self.rooms.append(room)
         room = setup_room_p2()
@@ -1520,7 +1540,7 @@ class SteamPunkGame(arcade.Window):
         self.rooms.append(room)
         room = setup_room_p7()
         self.rooms.append(room)
-        # Ruinas:
+        # Ruinas: (7-21)
         room = setup_room_r1()
         self.rooms.append(room)
         room = setup_room_r2()
@@ -1551,10 +1571,10 @@ class SteamPunkGame(arcade.Window):
         self.rooms.append(room)
         room = setup_room_r15()
         self.rooms.append(room)
-        # Laboratorio
-        room = setup_room_l1()
+        # Laboratorio (22-boss final)
+        room = setup_room_l1()  # 22
         self.rooms.append(room)
-        room = setup_room_l2()
+        room = setup_room_l2()  # 23
         self.rooms.append(room)
         room = setup_room_l3()
         self.rooms.append(room)
@@ -1568,9 +1588,9 @@ class SteamPunkGame(arcade.Window):
         self.rooms.append(room)
         room = setup_room_l8()
         self.rooms.append(room)
-        room = setup_room_l9()
+        room = setup_room_l9()  # 30
         self.rooms.append(room)
-        room = setup_room_l10()
+        room = setup_room_l10()  # 31
         self.rooms.append(room)
         room = setup_room_l11()
         self.rooms.append(room)
@@ -1586,13 +1606,13 @@ class SteamPunkGame(arcade.Window):
         self.rooms.append(room)
         room = setup_room_l17()
         self.rooms.append(room)
-        room = setup_room_l18()
+        room = setup_room_l18()  # 39
         self.rooms.append(room)
-        room = setup_room_l19()
+        room = setup_room_l19()  # 40
         self.rooms.append(room)
-        room = setup_room_l20()
+        room = setup_room_l20()  # 41
         self.rooms.append(room)
-        room = setup_room_l21()
+        room = setup_room_l21()  # 42
         self.rooms.append(room)
         room = setup_room_l22()
         self.rooms.append(room)
@@ -1606,17 +1626,15 @@ class SteamPunkGame(arcade.Window):
         self.rooms.append(room)
         room = setup_room_l27()
         self.rooms.append(room)
-        room = setup_room_l28()
+        room = setup_room_l28()  # 49
         self.rooms.append(room)
-        room = setup_room_l29()
+        room = setup_room_l29()  # 50
         self.rooms.append(room)
-        room = setup_room_l30()
+        room = setup_room_l30()  # 51
         self.rooms.append(room)
-        room = setup_room_l31()
+        room = setup_room_l31()  # 52
         self.rooms.append(room)
-        room = setup_room_l31()
-        self.rooms.append(room)
-        room = setup_room_l32()
+        room = setup_room_l32()  # 53
         self.rooms.append(room)
         room = setup_room_l33()
         self.rooms.append(room)
@@ -1646,8 +1664,10 @@ class SteamPunkGame(arcade.Window):
         self.rooms.append(room)
         room = setup_room_l46()
         self.rooms.append(room)
+        room = setup_room_lboss()
+        self.rooms.append(room)
 
-        self.current_room = 21  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        self.current_room = 22  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
 
@@ -1965,8 +1985,15 @@ class SteamPunkGame(arcade.Window):
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = SCREEN_HEIGHT - 110
                 self.bullet_list = arcade.SpriteList()
+            elif self.jugador.center_y < 90 and self.current_room == 14:  # 14(r8)-->22(l1)
+                self.current_room = 22
+                self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
+                                                                 self.rooms[self.current_room].wall_list)
+                self.jugador.center_y = 300
+                self.bullet_list = arcade.SpriteList()
 
             # Laboratorio:
+
             elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 22:  # 22(l1)-->23(l2)
                 self.current_room = 23
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
@@ -2063,14 +2090,14 @@ class SteamPunkGame(arcade.Window):
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_x = SCREEN_WIDTH - 110
                 self.bullet_list = arcade.SpriteList()
-            elif self.jugador.center_y < 90 and self.current_room == 30:  # 30(l9)-->31(l10)
+            elif self.jugador.center_y < 90 and self.current_room == 28:  # 28(l7)-->31(l10)
                 self.current_room = 31
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = SCREEN_HEIGHT - 110
                 self.bullet_list = arcade.SpriteList()
-            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 31:  # 31(l10)-->30(l9)
-                self.current_room = 30
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 31:  # 31(l10)-->28(l7)
+                self.current_room = 28
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = 100
@@ -2443,6 +2470,7 @@ class SteamPunkGame(arcade.Window):
                 self.bullet_list = arcade.SpriteList()
             elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 59:  # 59(l38)-->58(l37)
                 self.current_room = 58
+                print("de 38 a 37")
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = 100
@@ -2455,6 +2483,7 @@ class SteamPunkGame(arcade.Window):
                 self.bullet_list = arcade.SpriteList()
             elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 60:  # 60(l39)-->59(l38)
                 self.current_room = 59
+                print("de 39 a 38")
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = 100
@@ -2556,8 +2585,8 @@ class SteamPunkGame(arcade.Window):
                 self.jugador.center_x = SCREEN_WIDTH - 110
                 self.bullet_list = arcade.SpriteList()
             # Pasar a la sala del boss final (no se puede volver)
-            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 66:  # 66(l45)-->67(boss)
-                self.current_room = 67
+            elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 66:  # 66(l45)-->68(boss)
+                self.current_room = 68
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = 100
