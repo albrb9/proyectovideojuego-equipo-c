@@ -28,6 +28,7 @@ class Room:
         self.enemigos_list = None
         self.balas_list = None
         self.recargas_list = None
+        self.buffs_list = None
 
 
 def setup_room_p1():
@@ -38,11 +39,18 @@ def setup_room_p1():
     room.wall_list = arcade.SpriteList()
     room.enemigos_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+    room.buffs_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION6.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "CAJAS Y OBJETOS")
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION6.png")
+
+    # Buffs
+    buff = arcade.Sprite("sprites_master" + os.path.sep + "PARTE1.png")
+    buff.center_x = 750
+    buff.center_y = 450
+    room.buffs_list.append(buff)
 
     esqueleto1 = Enemigos.Skeleton()
     esqueleto1.center_y = 300
@@ -169,11 +177,18 @@ def setup_room_p7():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+    room.buffs_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "PRISION1.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "PRISION1.png")
+
+    # Buffs
+    buff = arcade.Sprite("sprites_master" + os.path.sep + "PARTE3.png")
+    buff.center_x = 450
+    buff.center_y = 250
+    room.buffs_list.append(buff)
 
     # Definir muros
     room.wall_list = obstaculos
@@ -338,11 +353,18 @@ def setup_room_r8():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+    room.buffs_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS13.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS13.png")
+
+    # Buffs
+    buff = arcade.Sprite("sprites_master" + os.path.sep + "PARTE2.png")
+    buff.center_x = 450
+    buff.center_y = 250
+    room.buffs_list.append(buff)
 
     # Definir muros
     room.wall_list = obstaculos
@@ -464,11 +486,18 @@ def setup_room_r14():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+    room.buffs_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "RUINAS14.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "ROCAS Y CAJAS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "RUINAS14.png")
+
+    # Buffs
+    buff = arcade.Sprite("sprites_master" + os.path.sep + "MOVIMIENTOPOWERUP.png")
+    buff.center_x = 450
+    buff.center_y = 250
+    room.buffs_list.append(buff)
 
     # Definir muros
     room.wall_list = obstaculos
@@ -1451,11 +1480,18 @@ def setup_room_l46():
     room.enemigos_list = arcade.SpriteList()
     room.balas_list = arcade.SpriteList()
     room.recargas_list = arcade.SpriteList()
+    room.buffs_list = arcade.SpriteList()
 
     # Tile map
     mapa_hab2 = arcade.tilemap.read_tmx("Mapas y Objetos" + os.path.sep + "LAB4.tmx")
     obstaculos = arcade.process_layer(mapa_hab2, "OBJETOS")  # OJO!
     room.background = arcade.load_texture("sprites_master" + os.path.sep + "LAB4.png")
+
+    # Buffs
+    buff = arcade.Sprite("sprites_master" + os.path.sep + "BALASPOWERUP.png")
+    buff.center_x = 700
+    buff.center_y = 700
+    room.buffs_list.append(buff)
 
     # Definir muros
     room.wall_list = obstaculos
@@ -1509,6 +1545,14 @@ class SteamPunkGame(arcade.Window):
         self.mirando_controles = False
         # Pausar el juego
         self.pausado = False
+        # Atributos para manejar el mostrar mensajes dependiendo del buff y administrar los buffs en sí
+        self.contador_quitar_mensaje = 0
+        self.buffs_activos = []
+        self.recogido_buff1 = False  # para mostrar el mensaje correspondiente
+        self.recogido_buff2 = False
+        self.recogido_buff3 = False
+        self.recogido_buff4 = False
+        self.recogido_buff5 = False
 
         self.frame_count = 0
 
@@ -1521,6 +1565,18 @@ class SteamPunkGame(arcade.Window):
         self.jugador.center_x = 350
         self.jugador.center_y = 350
         self.player_list.append(self.jugador)
+        self.buffs_activos = [False, False, False, False,
+                              False]  # True en la posicion 0: buff1 activo; True en la posicion 1: buff2 activo, etc
+        # Los ponemos en el setup tambien para cuando hagamos el reinicio se inicien correctamente:
+        self.recogido_buff1 = False
+        self.recogido_buff2 = False
+        self.recogido_buff3 = False
+        self.recogido_buff4 = False
+        self.recogido_buff5 = False
+        self.velocidad_jugador = 4
+        self.vida_jugador = 10
+        self.carga_fantasmal_jugador = 100
+        self.contador_quitar_mensaje = 300  # 5s
 
         # Rooms
         self.rooms = []  # lista de todas las habitaciones
@@ -1667,7 +1723,7 @@ class SteamPunkGame(arcade.Window):
         room = setup_room_lboss()
         self.rooms.append(room)
 
-        self.current_room = 22  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+        self.current_room = 0  # habitacion inicial (cambiar a 0)/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
         # Fisicas para la habitacion en la que estemos
         self.physics_engine = arcade.PhysicsEngineSimple(self.jugador, self.rooms[self.current_room].wall_list)
 
@@ -1675,7 +1731,7 @@ class SteamPunkGame(arcade.Window):
         arcade.start_render()
         if self.empezado:
             if self.pausado:
-                HUD.dibujar_hud_pausado()
+                HUD.dibujar_hud_pausado(self.buffs_activos)
             elif self.jugador.muerto:
                 HUD.dibujar_hud_gameover()
             else:
@@ -1689,9 +1745,48 @@ class SteamPunkGame(arcade.Window):
                 self.rooms[self.current_room].wall_list.draw()
                 self.player_list.draw()
                 self.bullet_list.draw()
+                # Mostramos mensajes relacionados con los buffs que vayamos cogiendo
+                if self.recogido_buff1:
+                    HUD.mostrar_mensaje_buff(1)
+                    if self.contador_quitar_mensaje == 0:
+                        self.recogido_buff1 = False
+                        self.contador_quitar_mensaje = 300
+                    else:
+                        self.contador_quitar_mensaje -= 1
+                elif self.recogido_buff2:
+                    HUD.mostrar_mensaje_buff(2)
+                    if self.contador_quitar_mensaje == 0:
+                        self.recogido_buff2 = False
+                        self.contador_quitar_mensaje = 300
+                    else:
+                        self.contador_quitar_mensaje -= 1
+                elif self.recogido_buff3:
+                    HUD.mostrar_mensaje_buff(3)
+                    if self.contador_quitar_mensaje == 0:
+                        self.recogido_buff3 = False
+                        self.contador_quitar_mensaje = 300
+                    else:
+                        self.contador_quitar_mensaje -= 1
+                elif self.recogido_buff4:
+                    HUD.mostrar_mensaje_buff(4)
+                    if self.contador_quitar_mensaje == 0:
+                        self.recogido_buff4 = False
+                        self.contador_quitar_mensaje = 300
+                    else:
+                        self.contador_quitar_mensaje -= 1
+                elif self.recogido_buff5:
+                    HUD.mostrar_mensaje_buff(5)
+                    if self.contador_quitar_mensaje == 0:
+                        self.recogido_buff5 = False
+                        self.contador_quitar_mensaje = 300
+                    else:
+                        self.contador_quitar_mensaje -= 1
+
+                self.rooms[self.current_room].recargas_list.draw()
+                self.rooms[self.current_room].buffs_list.draw()
+                HUD.dibujar_partes_artefacto(self.buffs_activos)
                 self.rooms[self.current_room].enemigos_list.draw()
                 self.rooms[self.current_room].balas_list.draw()
-                self.rooms[self.current_room].recargas_list.draw()
 
         else:
             if self.mirando_controles:
@@ -1712,7 +1807,8 @@ class SteamPunkGame(arcade.Window):
                 self.vida_jugador = 10
                 self.jugador.desactivar_modo_fantasmal()
                 # Quitamos los buffs
-                self.velocidad_jugador /= 2
+                if self.buffs_activos[1]:  # si tenemos el buff de velocidad activo
+                    self.velocidad_jugador /= 1.5
             # Si estamos en modo fantasamal y nos quedamos sin tiempo
             # --> game over
             if self.jugador.contador_de_muerte <= 0 and self.jugador.estado_fantasmal:
@@ -1726,7 +1822,8 @@ class SteamPunkGame(arcade.Window):
                     self.jugador.activar_modo_fantasmal()
                     self.carga_fantasmal_jugador -= 100
                     # Buffs
-                    self.velocidad_jugador *= 2  # doble velocidad
+                    if self.buffs_activos[1]:  # si tenemos el buff de velocidad activo
+                        self.velocidad_jugador *= 1.5
                 else:  # morimos
                     self.jugador.morir()
                     return
@@ -2470,7 +2567,6 @@ class SteamPunkGame(arcade.Window):
                 self.bullet_list = arcade.SpriteList()
             elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 59:  # 59(l38)-->58(l37)
                 self.current_room = 58
-                print("de 38 a 37")
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = 100
@@ -2483,7 +2579,6 @@ class SteamPunkGame(arcade.Window):
                 self.bullet_list = arcade.SpriteList()
             elif self.jugador.center_y > SCREEN_HEIGHT - 90 and self.current_room == 60:  # 60(l39)-->59(l38)
                 self.current_room = 59
-                print("de 39 a 38")
                 self.physics_engine = arcade.PhysicsEngineSimple(self.jugador,
                                                                  self.rooms[self.current_room].wall_list)
                 self.jugador.center_y = 100
@@ -2606,14 +2701,18 @@ class SteamPunkGame(arcade.Window):
                     # Vamos a identificar el enemigo que ha sido golpeado:
                     for enemigo in self.rooms[self.current_room].enemigos_list:
                         if enemigo in hit_list2:
-                            enemigo.recibir_damage(1)  # Pendiente de implementar poder hacer más daño?
+                            if self.buffs_activos[4]:
+                                enemigo.recibir_damage(2)
+                            else:
+                                enemigo.recibir_damage(1)
                             # Muerte de enemigos
                             if enemigo.vida <= 0:
                                 # (por si les hacemos más daño de la vida que tienen y se queda con vida negativa)
                                 # Dropeos
                                 n = random.randint(0, 10)
-                                if n == 10 or n == 9:  # 20 % de drop
+                                if n == 10:  # 10 % de drop
                                     # Dropeo exitoso:
+                                    # Cambiar por el sprite adecuado /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
                                     recarga = arcade.Sprite("sprites_master" + os.path.sep + "DISPOSITIVOFANTASMA.png")
                                     recarga.center_x = enemigo.center_x
                                     recarga.center_y = enemigo.center_y
@@ -2631,7 +2730,30 @@ class SteamPunkGame(arcade.Window):
             hit_list3 = arcade.check_for_collision_with_list(self.jugador, self.rooms[self.current_room].recargas_list)
             for recarga in hit_list3:
                 recarga.remove_from_sprite_lists()
-                self.carga_fantasmal_jugador += 10
+                self.carga_fantasmal_jugador += 100
+
+            # Mirar si hemos recogido algun buff y aplicarlo
+            if self.rooms[self.current_room].buffs_list is not None:
+                hit_list4 = arcade.check_for_collision_with_list(self.jugador, self.rooms[self.current_room].buffs_list)
+                for buff in self.rooms[self.current_room].buffs_list:
+                    if buff in hit_list4:
+                        buff.remove_from_sprite_lists()
+                        if self.current_room == 0:  # hemos cogido el buff de habilitar modo fantasmal
+                            self.recogido_buff1 = True
+                            self.buffs_activos[0] = True
+                        if self.current_room == 6:  # hemos cogido el buff de x2 vel en modo fant.
+                            self.recogido_buff2 = True
+                            self.buffs_activos[1] = True
+                        if self.current_room == 14:  # hemos cogido el buff de triple disparo en modo fantasmal
+                            self.recogido_buff3 = True
+                            self.buffs_activos[2] = True
+                        if self.current_room == 20:  # hemos cogido el buff de velocidad por 1.2
+                            self.recogido_buff4 = True
+                            self.buffs_activos[3] = True
+                            self.velocidad_jugador *= 1.2  # aplicamos el buff permanente durante toda la partida
+                        if self.current_room == 67:  # hemos cogido el buff de daño doble
+                            self.recogido_buff5 = True
+                            self.buffs_activos[4] = True
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -2650,8 +2772,6 @@ class SteamPunkGame(arcade.Window):
                 self.setup()
                 self.jugador.muerto = False
                 self.jugador.estado_fantasmal = False  # por si morimos en modo fontasmal
-                self.vida_jugador = 10
-                self.carga_fantasmal_jugador = 100
         # Pausar el juego
         if key == arcade.key.P and not self.pausado:
             self.pausado = True
@@ -2668,8 +2788,17 @@ class SteamPunkGame(arcade.Window):
             self.jugador.change_x = self.velocidad_jugador
         # Disparo
         if key == arcade.key.Q:
-            bala = self.jugador.disparar(self.jugador, self.velocidad_disparo)
-            self.bullet_list.append(bala)
+            if self.jugador.estado_fantasmal and self.buffs_activos[2]:  # disparo triple en modo fantasmal
+                # Creamos las 3 balas
+                bala = self.jugador.disparar(self.jugador, self.velocidad_disparo)
+                self.bullet_list.append(bala)
+                bala = self.jugador.disparar(self.jugador, self.velocidad_disparo, True)
+                self.bullet_list.append(bala)
+                bala = self.jugador.disparar(self.jugador, self.velocidad_disparo, False, True)
+                self.bullet_list.append(bala)
+            else:
+                bala = self.jugador.disparar(self.jugador, self.velocidad_disparo)
+                self.bullet_list.append(bala)
         # Bloquear direccion a la que mira el personaje (hay que mantener)
         if key == arcade.key.SPACE:
             self.jugador.bloquear_direccion()

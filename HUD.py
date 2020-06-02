@@ -33,13 +33,16 @@ def dibujar_hud(vida, carga_fantasmal):
     arcade.draw_texture_rectangle(100, 865, 200, 50, barra_de_vida)  # centrox, centroy, ancho, alto, textura
 
     # Carga Fantasmal
-    carga_fantasmal = str(carga_fantasmal)  # lo convertimos a String
-    arcade.draw_text(carga_fantasmal, 10, 800, arcade.color.WHITE, 24)
+    carga_fantasmal_s = str(carga_fantasmal)  # lo convertimos a String
+    if carga_fantasmal >= 100:
+        arcade.draw_text(carga_fantasmal_s, 10, 800, arcade.color.GREEN_YELLOW, 24)
+    arcade.draw_text(carga_fantasmal_s, 10, 800, arcade.color.WHITE, 24)
 
 
 def dibujar_contador_de_muerte(contador):
     arcade.draw_text(str(int(contador / 60)), 445, 825, arcade.color.RED_ORANGE, 40, bold=True, align="center")
-    arcade.draw_text("¡Acaba con todos los enemigos de la sala!", 250, 800, arcade.color.RED_ORANGE, 20, bold=True, align="center")
+    arcade.draw_text("¡Acaba con todos los enemigos de la sala!", 250, 800, arcade.color.RED_ORANGE, 20, bold=True,
+                     align="center")
 
 
 def dibujar_pantalla_de_inicio():
@@ -57,12 +60,89 @@ def dibujar_controles():
     arcade.draw_text("Pulsa retroceso para volver", 0, 100, arcade.color.WOOD_BROWN, 20, 900, "center")
 
 
-def dibujar_hud_pausado():
+def dibujar_hud_pausado(buffs):
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
-    arcade.draw_text("Pausado", 0, 450, arcade.color.WOOD_BROWN, 40, 900, "center", bold=True)
+    arcade.draw_text("Pausado", 0, 800, arcade.color.WOOD_BROWN, 40, 900, "center", bold=True)
+    arcade.draw_text("Pulsa P para volver", 0, 100, arcade.color.WOOD_BROWN, 30, 900, align="center", bold=True)
+    if buffs[0]:
+        # Info modo fantasmal
+        arcade.draw_text(
+            "Modo fantasmal: Una vez tu vida llegue a 0, consumirás 100 de carga y te convertirás en un fantasma",
+            0, 750, arcade.color.GREEN_YELLOW, 15, 900, align="center", bold=True)
+        arcade.draw_text(
+            "Si matas a todos los enemigos de la sala en 10 segundos siendo un fantasma, volverás a la vida.",
+            0, 700, arcade.color.GREEN_YELLOW, 15, 900, align="center", bold=True)
+    if buffs[1] or buffs[2]:
+        arcade.draw_text("Mejoras modo fantasmal:", 450, 550, arcade.color.GREEN_YELLOW, 15, 450, align="center",
+                         bold=True)
+    if buffs[1]:
+        # Info mejora velocidad modo fant
+        arcade.draw_text(
+            "Velocidad: x1.5",
+            450, 500, arcade.color.GREEN_YELLOW, 15, 450, align="center", bold=True)
+    if buffs[2]:
+        # Info mejora triple disparo modo fant
+        arcade.draw_text(
+            "Triple disparo",
+            450, 450, arcade.color.GREEN_YELLOW, 15, 450, align="center", bold=True)
+    if buffs[3] or buffs[4]:
+        arcade.draw_text("Mejoras generales:", 0, 550, arcade.color.GOLDEN_BROWN, 15, 450, align="center",
+                         bold=True)
+        arcade.draw_text(
+            "Las mejoras generales también afectan al modo fantasmal",
+            0, 650, arcade.color.GOLDEN_BROWN, 15, 900, align="center", bold=True)
+    if buffs[3]:
+        # Info mejora velocidad permanente
+        arcade.draw_text(
+            "Velocidad: x1.2",
+            0, 500, arcade.color.GOLDEN_BROWN, 15, 450, align="center", bold=True)
+    if buffs[4]:
+        # Info mejora daño permanente
+        arcade.draw_text(
+            "Daño doble",
+            0, 450, arcade.color.GOLDEN_BROWN, 15, 450, align="center", bold=True)
 
 
 def dibujar_hud_gameover():
     arcade.draw_lrtb_rectangle_filled(0, 900, 900, 0, arcade.color.BLACK)
     arcade.draw_text("GAME OVER", 325, 450, arcade.color.RED_DEVIL, 36, align="center", bold=True)
     arcade.draw_text("Pulsa R para reiniciar", 335, 250, arcade.color.RED_DEVIL, 24, align="center")
+
+
+def mostrar_mensaje_buff(n):
+    arcade.draw_lrtb_rectangle_filled(250, 775, 875, 825, arcade.color.DARK_SEA_GREEN)
+    if n == 1:
+        # Buff inicial para habilitar el modo fantasmal
+        arcade.draw_text("Ahora ya puedes habilitar el modo fantasamal!", 250, 850,
+                         arcade.color.WHITE, align="center", bold=True, font_size=18)
+    elif n == 2:
+        # Buff mejora de velocidad modo fantasmal
+        arcade.draw_text("Ahora vas más rápido durante el modo fantasmal!", 250, 850,
+                         arcade.color.WHITE, align="center", bold=True, font_size=18)
+    elif n == 3:
+        # Disparo triple modo fantasmal
+        arcade.draw_text("Ahora disparas tres balas durante el modo fantasmal!", 250, 850,
+                         arcade.color.WHITE, align="center", bold=True, font_size=18)
+    elif n == 4:
+        # Velocidad 1.2 permanente
+        arcade.draw_text("Ahora vas más rápido!", 250, 850,
+                         arcade.color.WHITE, align="center", bold=True, font_size=18)
+    elif n == 5:
+        # Daño doble permanente
+        arcade.draw_text("Ahora haces más daño!", 250, 850,
+                         arcade.color.WHITE, align="center", bold=True, font_size=18)
+
+    arcade.draw_text("Ve al menú de pausa para más información", 250, 825,
+                     arcade.color.WHITE, align="center", bold=True, font_size=16)
+
+
+def dibujar_partes_artefacto(buffs):
+    if buffs[0]:
+        piedra = arcade.load_texture("sprites_master" + os.path.sep + "PARTE1.png")
+        arcade.draw_texture_rectangle(840, 840, 40, 50, piedra)
+    if buffs[1]:
+        vasija = arcade.load_texture("sprites_master" + os.path.sep + "PARTE3.png")
+        arcade.draw_texture_rectangle(840, 810, 50, 20, vasija)
+    if buffs[2]:
+        jaula = arcade.load_texture("sprites_master" + os.path.sep + "PARTE2.png")
+        arcade.draw_texture_rectangle(840, 840, 40, 50, jaula)

@@ -35,6 +35,7 @@ class Jugador(arcade.Sprite):
         self.bloq_direccion = False
         self.disparando = False
         self.estado_fantasmal = False
+        self.disparo_triple_fant = False
         self.muerto = False
         # Usado para quitar la pistola a los 2s
         self.contador_remove_pistola = 0
@@ -81,7 +82,7 @@ class Jugador(arcade.Sprite):
         # Sonidos
         self.sonido_disparar = arcade.load_sound("Sonidos" + os.path.sep + "Disparo prota.wav")
 
-    def disparar(self, jugador, velocidad_disparo):
+    def disparar(self, jugador, velocidad_disparo, diagonal=False, diagonal_invertida=False):
         """ArcadeSprite, int ---> ArcadeSprite
         Crea y calcula la trayectoria de la bala y retorna esta"""
         # Poner el booleano a True para cambiar texturas y que se muestre la pistola
@@ -94,21 +95,65 @@ class Jugador(arcade.Sprite):
         self.sonido_disparar.play()
         # Calcular su trayectoria y su posicion de spawn
         if self.character_face_direction == RIGHT_FACING:
-            bala.left = jugador.right
-            bala.center_y = jugador.center_y
-            bala.change_x = velocidad_disparo
+            if diagonal:  # Arriba -->
+                bala.left = jugador.right
+                bala.center_y = jugador.center_y
+                bala.change_x = velocidad_disparo
+                bala.change_y = velocidad_disparo
+            elif diagonal_invertida:  # Abajo -->
+                bala.left = jugador.right
+                bala.center_y = jugador.center_y
+                bala.change_x = velocidad_disparo
+                bala.change_y = -velocidad_disparo
+            else:
+                bala.left = jugador.right
+                bala.center_y = jugador.center_y
+                bala.change_x = velocidad_disparo
         elif self.character_face_direction == LEFT_FACING:
-            bala.right = jugador.left
-            bala.center_y = jugador.center_y
-            bala.change_x = -velocidad_disparo
+            if diagonal:  # Abajo <--
+                bala.right = jugador.left
+                bala.center_y = jugador.center_y
+                bala.change_x = -velocidad_disparo
+                bala.change_y = -velocidad_disparo
+            elif diagonal_invertida:  # Arriba <--
+                bala.right = jugador.left
+                bala.center_y = jugador.center_y
+                bala.change_x = -velocidad_disparo
+                bala.change_y = velocidad_disparo
+            else:
+                bala.right = jugador.left
+                bala.center_y = jugador.center_y
+                bala.change_x = -velocidad_disparo
         elif self.character_face_direction == UP_FACING:
-            bala.bottom = jugador.top
-            bala.center_x = jugador.center_x
-            bala.change_y = velocidad_disparo
+            if diagonal:  # Arriba -->
+                bala.bottom = jugador.top
+                bala.center_x = jugador.center_x
+                bala.change_x = velocidad_disparo
+                bala.change_y = velocidad_disparo
+            elif diagonal_invertida: # Arriba <--
+                bala.bottom = jugador.top
+                bala.center_x = jugador.center_x
+                bala.change_x = -velocidad_disparo
+                bala.change_y = velocidad_disparo
+            else:
+                bala.bottom = jugador.top
+                bala.center_x = jugador.center_x
+                bala.change_y = velocidad_disparo
         elif self.character_face_direction == DOWN_FACING:
-            bala.top = jugador.bottom
-            bala.center_x = jugador.center_x
-            bala.change_y = -velocidad_disparo
+            if diagonal:  # Abajo <--
+                bala.top = jugador.bottom
+                bala.center_x = jugador.center_x
+                bala.change_x = -velocidad_disparo
+                bala.change_y = -velocidad_disparo
+            elif diagonal_invertida: # Abajo -->
+                bala.top = jugador.bottom
+                bala.center_x = jugador.center_x
+                bala.change_x = velocidad_disparo
+                bala.change_y = -velocidad_disparo
+            else:
+                bala.top = jugador.bottom
+                bala.center_x = jugador.center_x
+                bala.change_y = -velocidad_disparo
         return bala
 
     def bloquear_direccion(self):
