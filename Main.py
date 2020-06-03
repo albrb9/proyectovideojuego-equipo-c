@@ -2713,7 +2713,7 @@ class SteamPunkGame(arcade.Window):
                                 if n == 10:  # 10 % de drop
                                     # Dropeo exitoso:
                                     # Cambiar por el sprite adecuado /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-                                    recarga = arcade.Sprite("sprites_master" + os.path.sep + "DISPOSITIVOFANTASMA.png")
+                                    recarga = arcade.Sprite("sprites_master" + os.path.sep + "alma.png")
                                     recarga.center_x = enemigo.center_x
                                     recarga.center_y = enemigo.center_y
                                     self.rooms[self.current_room].recargas_list.append(recarga)
