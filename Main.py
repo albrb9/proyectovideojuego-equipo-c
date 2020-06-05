@@ -1818,7 +1818,7 @@ class SteamPunkGame(arcade.Window):
                 return
             # Activar modo fantsamal (si podemos)
             if self.vida_jugador == 0 and not self.jugador.estado_fantasmal:
-                if self.carga_fantasmal_jugador == 100:  # Aplicamos buffs modo fant.
+                if self.carga_fantasmal_jugador >= 100:  # Aplicamos buffs modo fant.
                     self.jugador.activar_modo_fantasmal()
                     self.carga_fantasmal_jugador -= 100
                     # Buffs

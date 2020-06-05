@@ -115,7 +115,7 @@ class Skeleton(arcade.Sprite):
 
     def disparar(self, skeleton, Velocidad_disparo_skeleton, jugador):
         laser = arcade.Sprite("sprites_master/LASER.png")
-        self.sonido_disparar.play()
+        #self.sonido_disparar.play()
         if self.character_face_direction == RIGHT_FACING:
             laser.left = skeleton.right
             laser.center_y = skeleton.center_y
