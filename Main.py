@@ -1520,12 +1520,12 @@ def setup_room_lboss():
     return room
 
 
-class SteamPunkGame(arcade.Window):
+class PhantomGear(arcade.Window):
     """ Ventana principal del juego """
 
     def __init__(self):
         """ Constructor """
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Juego")  # Poner nombre del juego
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Phantom Gear")
         # Sprite lists
         self.player_list = None
         self.bullet_list = None
@@ -1576,7 +1576,7 @@ class SteamPunkGame(arcade.Window):
         self.velocidad_jugador = 4
         self.vida_jugador = 10
         self.carga_fantasmal_jugador = 100
-        self.contador_quitar_mensaje = 300  # 5s
+        self.contador_quitar_mensaje = 600  # 10s
 
         # Rooms
         self.rooms = []  # lista de todas las habitaciones
@@ -1750,41 +1750,41 @@ class SteamPunkGame(arcade.Window):
                     HUD.mostrar_mensaje_buff(1)
                     if self.contador_quitar_mensaje == 0:
                         self.recogido_buff1 = False
-                        self.contador_quitar_mensaje = 300
+                        self.contador_quitar_mensaje = 600
                     else:
                         self.contador_quitar_mensaje -= 1
                 elif self.recogido_buff2:
                     HUD.mostrar_mensaje_buff(2)
                     if self.contador_quitar_mensaje == 0:
                         self.recogido_buff2 = False
-                        self.contador_quitar_mensaje = 300
+                        self.contador_quitar_mensaje = 600
                     else:
                         self.contador_quitar_mensaje -= 1
                 elif self.recogido_buff3:
                     HUD.mostrar_mensaje_buff(3)
                     if self.contador_quitar_mensaje == 0:
                         self.recogido_buff3 = False
-                        self.contador_quitar_mensaje = 300
+                        self.contador_quitar_mensaje = 600
                     else:
                         self.contador_quitar_mensaje -= 1
                 elif self.recogido_buff4:
                     HUD.mostrar_mensaje_buff(4)
                     if self.contador_quitar_mensaje == 0:
                         self.recogido_buff4 = False
-                        self.contador_quitar_mensaje = 300
+                        self.contador_quitar_mensaje = 600
                     else:
                         self.contador_quitar_mensaje -= 1
                 elif self.recogido_buff5:
                     HUD.mostrar_mensaje_buff(5)
                     if self.contador_quitar_mensaje == 0:
                         self.recogido_buff5 = False
-                        self.contador_quitar_mensaje = 300
+                        self.contador_quitar_mensaje = 600
                     else:
                         self.contador_quitar_mensaje -= 1
 
                 self.rooms[self.current_room].recargas_list.draw()
-                self.rooms[self.current_room].buffs_list.draw()
                 HUD.dibujar_partes_artefacto(self.buffs_activos)
+                self.rooms[self.current_room].buffs_list.draw()
                 self.rooms[self.current_room].enemigos_list.draw()
                 self.rooms[self.current_room].balas_list.draw()
 
@@ -2818,7 +2818,7 @@ class SteamPunkGame(arcade.Window):
 
 
 def main():
-    ventana = SteamPunkGame()
+    ventana = PhantomGear()
     ventana.setup()
     arcade.run()
 
